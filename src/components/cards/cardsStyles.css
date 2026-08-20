@@ -1,0 +1,223 @@
+/* cardsStyles.css - Panel administrativo de cartas */
+
+.cards-status {
+    text-align: center;
+    color: #f5f0e6;
+    font-family: 'Georgia', serif;
+    margin-top: 3rem;
+}
+
+.cards-status--error {
+    color: #ff6b6b;
+}
+
+.cards-panel {
+    max-width: 950px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    color: #f5f0e6;
+    font-family: 'Georgia', serif;
+}
+
+.cards-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.cards-panel-title {
+    color: #d4af37;
+}
+
+.cards-table-wrapper {
+    overflow-x: auto;
+}
+
+.cards-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.cards-table th,
+.cards-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid #333;
+    text-align: left;
+}
+
+.cards-row--inactive {
+    opacity: 0.5;
+}
+
+.cards-row-thumb {
+    width: 36px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #0f0f1a;
+}
+
+.cards-row-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.cards-btn {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #d4af37;
+    border-radius: 6px;
+    background: #1a1a2e;
+    color: #f5f0e6;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.cards-btn:hover:not(:disabled) {
+    background: #d4af37;
+    color: #1a1a2e;
+}
+
+.cards-btn--small {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.cards-btn--primary {
+    background: #d4af37;
+    color: #1a1a2e;
+    font-weight: bold;
+}
+
+.cards-btn--danger {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+.cards-btn--danger:hover:not(:disabled) {
+    background: #ff6b6b;
+    color: #1a1a2e;
+}
+
+/* --- Formularios de crear/editar --- */
+
+.card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: #1a1a2e;
+    border: 1px solid #d4af37;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.card-form-title {
+    color: #d4af37;
+    margin-bottom: 0.5rem;
+}
+
+.card-form-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.card-form-input {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #0f0f1a;
+    color: #f5f0e6;
+    font-size: 0.85rem;
+}
+
+.card-form-input--small {
+    max-width: 90px;
+}
+
+.card-form-fieldset {
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card-form-fieldset legend {
+    color: #d4af37;
+    padding: 0 0.4rem;
+    font-size: 0.85rem;
+}
+
+.card-form-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-form-actions {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+/* --- Modal de confirmación --- */
+
+.cards-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.cards-modal {
+    background: #1a1a2e;
+    border: 2px solid #ff6b6b;
+    border-radius: 10px;
+    padding: 1.5rem;
+    max-width: 350px;
+    text-align: center;
+}
+
+.cards-modal-text {
+    margin-bottom: 1rem;
+}
+
+.cards-modal-actions {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+}
+/* Responsive - Movil */
+@media (max-width: 700px) {
+    .cards-table {
+        font-size: 0.75rem;
+    }
+
+    .cards-table th:nth-child(3),
+    .cards-table td:nth-child(3) {
+        display: none; /* Oculta la columna "Tipo" en pantallas angostas */
+    }
+
+    .cards-row-actions {
+        flex-direction: column;
+    }
+
+    .card-form {
+        padding: 1rem;
+    }
+
+    .card-form-fieldset label {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

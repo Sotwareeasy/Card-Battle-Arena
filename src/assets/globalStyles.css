@@ -1,0 +1,109 @@
+/* globalStyles.css - Reset, layout base, header y transiciones globales */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0f0f1a;
+    background-image: radial-gradient(circle at top, #1a1a2e 0%, #0f0f1a 60%);
+    min-height: 100vh;
+}
+
+.game-header {
+    text-align: center;
+    padding: 1.5rem 1rem 0.5rem;
+    color: #f5f0e6;
+    font-family: 'Georgia', serif;
+    position: relative;
+}
+
+.game-header h1 {
+    color: #d4af37;
+    margin: 0;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+}
+
+.game-header-player {
+    font-size: 0.85rem;
+    color: #cfcfcf;
+    margin: 0.3rem 0 0;
+}
+
+.game-header-admin-link {
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    background: transparent;
+    border: 1px solid #555;
+    color: #cfcfcf;
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.game-header-admin-link:hover {
+    border-color: #d4af37;
+    color: #d4af37;
+}
+
+/* Transición de fundido al cambiar de pantalla */
+.game-screen {
+    animation: screenFadeIn 0.35s ease;
+}
+
+@keyframes screenFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Toasts (feedback global) --- */
+
+.toast-stack {
+    position: fixed;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 200;
+}
+
+.toast {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    font-family: 'Georgia', serif;
+    font-size: 0.85rem;
+    color: #1a1a2e;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    animation: toastSlideIn 0.3s ease, toastFadeOut 0.4s ease 2.6s forwards;
+    max-width: 280px;
+}
+
+.toast--success {
+    background: #6bff9e;
+}
+
+.toast--error {
+    background: #ff6b6b;
+}
+
+@keyframes toastSlideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastFadeOut {
+    to { opacity: 0; transform: translateX(30px); }
+}
+
+/* Responsive general */
+@media (max-width: 480px) {
+    .game-header-admin-link {
+        position: static;
+        display: inline-block;
+        margin-top: 0.6rem;
+    }
+}
