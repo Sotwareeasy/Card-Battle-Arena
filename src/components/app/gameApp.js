@@ -42,7 +42,7 @@ class GameApp extends HTMLElement {
     render() {
         this.innerHTML = `
             <header class="game-header">
-                <h1>⚡ Card Battle Arena</h1>
+                <h1>Card Battle Arena</h1>
                 <p>Harry Potter Edition</p>
                 ${this.currentPlayer ? `<p class="game-header-player">Jugador: ${this.currentPlayer.nickname}</p>` : ''}
                 ${this.currentAdmin ? `<p class="game-header-player">Admin: ${this.currentAdmin.username}</p>` : ''}
