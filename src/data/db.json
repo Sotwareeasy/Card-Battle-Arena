@@ -186,6 +186,24 @@
       "losses": 0,
       "gamesPlayed": 1,
       "createdAt": "2026-08-21T03:48:57.633Z"
+    },
+    {
+      "id": "player-1787284988493",
+      "nickname": "ttytree",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:03:08.493Z"
+    },
+    {
+      "id": "player-1787285060543",
+      "nickname": "vxcvxcxcv",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:04:20.543Z"
     }
   ],
   "cards": [
@@ -817,7 +835,7 @@
       "id": "card-014",
       "name": "Dementor",
       "type": "Creature",
-      "image": "/images/cards/dementor.png",
+      "image": "/images/cards/Dementor.png",
       "description": "Criatura oscura que se alimenta de emociones positivas, debilitando a quien se le acerca.",
       "hp": 250,
       "attacks": [
