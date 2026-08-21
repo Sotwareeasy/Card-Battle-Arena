@@ -132,6 +132,69 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-08-20T04:13:58.540Z"
+    },
+    {
+      "id": "player-1787287086482",
+      "nickname": "Nicolas",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:38:06.482Z"
+    },
+    {
+      "id": "player-1787287615094",
+      "nickname": "NicoF",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:46:55.094Z"
+    },
+    {
+      "id": "player-1787287986542",
+      "nickname": "wsw",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:53:06.542Z"
+    },
+    {
+      "id": "player-1787288157779",
+      "nickname": "wswsw",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:55:57.780Z"
+    },
+    {
+      "id": "player-1787288235684",
+      "nickname": "eded",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:57:15.684Z"
+    },
+    {
+      "id": "player-1787288302277",
+      "nickname": "ede",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T04:58:22.277Z"
+    },
+    {
+      "id": "player-1787288856821",
+      "nickname": "dee",
+      "points": 10,
+      "wins": 0,
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-21T05:07:36.821Z"
     }
   ],
   "cards": [
@@ -139,7 +202,7 @@
       "id": "card-001",
       "name": "Harry Potter",
       "type": "Wizard",
-      "image": "/images/cards/harry-potter.webp",
+      "image": "/images/cards/Harry_Potter.png",
       "description": "Joven mago de Hogwarts conocido por su valentía y capacidad de enfrentarse a las artes oscuras.",
       "hp": 250,
       "attacks": [
@@ -187,7 +250,7 @@
       "id": "card-002",
       "name": "Hermione Granger",
       "type": "Student",
-      "image": "/images/cards/hermione-granger.webp",
+      "image": "/images/cards/Hermione.png",
       "description": "Bruja brillante y meticulosa, reconocida por su dominio teórico y estrategia en combate.",
       "hp": 250,
       "attacks": [
@@ -235,7 +298,7 @@
       "id": "card-003",
       "name": "Ron Weasley",
       "type": "Wizard",
-      "image": "/images/cards/ron-weasley.webp",
+      "image": "/images/cards/Ron.png",
       "description": "Leal amigo de Harry, conocido por su resistencia emocional y capacidad de sacrificio en batalla.",
       "hp": 250,
       "attacks": [
@@ -283,7 +346,7 @@
       "id": "card-004",
       "name": "Albus Dumbledore",
       "type": "Professor",
-      "image": "/images/cards/albus-dumbledore.webp",
+      "image": "/images/cards/Albus.png",
       "description": "Director de Hogwarts y mago considerado uno de los más poderosos de su generación.",
       "hp": 250,
       "attacks": [
@@ -331,7 +394,7 @@
       "id": "card-005",
       "name": "Severus Snape",
       "type": "Professor",
-      "image": "/images/cards/severus-snape.webp",
+      "image": "/images/cards/Severus.png",
       "description": "Maestro de pociones con un dominio profundo de hechizos ofensivos y magia oscura.",
       "hp": 250,
       "attacks": [
@@ -379,7 +442,7 @@
       "id": "card-006",
       "name": "Minerva McGonagall",
       "type": "Professor",
-      "image": "/images/cards/minerva-mcgonagall.webp",
+      "image": "/images/cards/Minerva.png",
       "description": "Subdirectora de Hogwarts y experta en transfiguración, firme y disciplinada en combate.",
       "hp": 250,
       "attacks": [
@@ -427,7 +490,7 @@
       "id": "card-007",
       "name": "Sirius Black",
       "type": "Auror",
-      "image": "/images/cards/sirius-black.webp",
+      "image": "/images/cards/Sirius.png",
       "description": "Animago rebelde y leal, combate con agresividad y astucia forjadas en Azkaban.",
       "hp": 250,
       "attacks": [
@@ -475,7 +538,7 @@
       "id": "card-008",
       "name": "Rubeus Hagrid",
       "type": "Magical Being",
-      "image": "/images/cards/rubeus-hagrid.webp",
+      "image": "/images/cards/rubeus.png",
       "description": "Guardián de las llaves de Hogwarts, de fuerza descomunal y gran corazón.",
       "hp": 250,
       "attacks": [
@@ -523,7 +586,7 @@
       "id": "card-009",
       "name": "Lord Voldemort",
       "type": "Dark Wizard",
-      "image": "/images/cards/lord-voldemort.webp",
+      "image": "/images/cards/voldemort.png",
       "description": "El mago tenebroso más temido de su era, de poder ofensivo devastador.",
       "hp": 250,
       "attacks": [
@@ -571,7 +634,7 @@
       "id": "card-010",
       "name": "Bellatrix Lestrange",
       "type": "Dark Wizard",
-      "image": "/images/cards/bellatrix-lestrange.webp",
+      "image": "/images/cards/Bellatrix.png",
       "description": "Mortífaga fanática y letal, ataca con ferocidad impredecible.",
       "hp": 250,
       "attacks": [
@@ -619,7 +682,7 @@
       "id": "card-011",
       "name": "Draco Malfoy",
       "type": "Wizard",
-      "image": "/images/cards/draco-malfoy.webp",
+      "image": "/images/cards/Draco.png",
       "description": "Estudiante de Slytherin, ambicioso y hábil, en constante búsqueda de reconocimiento.",
       "hp": 250,
       "attacks": [
@@ -667,7 +730,7 @@
       "id": "card-012",
       "name": "Lucius Malfoy",
       "type": "Dark Wizard",
-      "image": "/images/cards/lucius-malfoy.webp",
+      "image": "/images/cards/Lucius.png",
       "description": "Aristócrata influyente y calculador, combate con precisión fría y recursos ocultos.",
       "hp": 250,
       "attacks": [
@@ -715,7 +778,7 @@
       "id": "card-013",
       "name": "Dobby",
       "type": "Magical Being",
-      "image": "/images/cards/dobby.webp",
+      "image": "/images/cards/dobby.png",
       "description": "Elfo doméstico libre, leal y sorprendentemente poderoso cuando defiende a sus amigos.",
       "hp": 250,
       "attacks": [
@@ -763,7 +826,7 @@
       "id": "card-014",
       "name": "Dementor",
       "type": "Creature",
-      "image": "/images/cards/dementor.webp",
+      "image": "/images/cards/Dementor.png",
       "description": "Criatura oscura que se alimenta de emociones positivas, debilitando a quien se le acerca.",
       "hp": 250,
       "attacks": [
@@ -811,7 +874,7 @@
       "id": "card-015",
       "name": "Basilisco",
       "type": "Creature",
-      "image": "/images/cards/basilisco.webp",
+      "image": "/images/cards/Basilisco.png",
       "description": "Serpiente gigante de la Cámara de los Secretos, temida por su mirada mortal.",
       "hp": 250,
       "attacks": [
@@ -859,7 +922,7 @@
       "id": "card-016",
       "name": "Fawkes",
       "type": "Creature",
-      "image": "/images/cards/fawkes.webp",
+      "image": "/images/cards/fenix.png",
       "description": "Fénix leal a Dumbledore, capaz de desatar llamas protectoras en combate.",
       "hp": 250,
       "attacks": [
@@ -907,7 +970,7 @@
       "id": "card-017",
       "name": "Remus Lupin",
       "type": "Professor",
-      "image": "/images/cards/remus-lupin.webp",
+      "image": "/images/cards/Remus.png",
       "description": "Profesor de Defensa Contra las Artes Oscuras, sereno pero con una fuerza interior salvaje.",
       "hp": 250,
       "attacks": [
@@ -955,7 +1018,7 @@
       "id": "card-018",
       "name": "Luna Lovegood",
       "type": "Student",
-      "image": "/images/cards/luna-lovegood.webp",
+      "image": "/images/cards/Luna.png",
       "description": "Bruja excéntrica y perceptiva, ve lo que otros pasan por alto y ataca de forma impredecible.",
       "hp": 250,
       "attacks": [
@@ -1003,7 +1066,7 @@
       "id": "card-019",
       "name": "Neville Longbottom",
       "type": "Wizard",
-      "image": "/images/cards/neville-longbottom.webp",
+      "image": "/images/cards/Neville.png",
       "description": "Estudiante tímido que se convierte en un valiente defensor de sus ideales.",
       "hp": 250,
       "attacks": [
@@ -1051,7 +1114,7 @@
       "id": "card-020",
       "name": "Gellert Grindelwald",
       "type": "Dark Wizard",
-      "image": "/images/cards/gellert-grindelwald.webp",
+      "image": "/images/cards/Gellert.png",
       "description": "Mago tenebroso visionario, precursor de Voldemort, de ambición y poder ofensivo notables.",
       "hp": 250,
       "attacks": [
@@ -1211,6 +1274,29 @@
       ],
       "startedAt": "2026-08-20T04:10:20.205Z",
       "endedAt": "2026-08-20T04:11:46.861Z"
+    },
+    {
+      "id": "battle-1787288953084",
+      "playerId": "player-1787288856821",
+      "playerNickname": "dee",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-018",
+        "card-011",
+        "card-019",
+        "card-012",
+        "card-014"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-008",
+        "card-003",
+        "card-006",
+        "card-013"
+      ],
+      "startedAt": "2026-08-21T05:07:43.835Z",
+      "endedAt": "2026-08-21T05:09:13.078Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
