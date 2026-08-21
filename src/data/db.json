@@ -134,48 +134,86 @@
       "createdAt": "2026-08-20T04:13:58.540Z"
     },
     {
+<<<<<<< HEAD
       "id": "player-1787287086482",
       "nickname": "Nicolas",
+=======
+      "id": "player-1787279378868",
+      "nickname": "aesdf",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T04:38:06.482Z"
     },
     {
       "id": "player-1787287615094",
       "nickname": "NicoF",
+=======
+      "createdAt": "2026-08-21T02:29:38.868Z"
+    },
+    {
+      "id": "player-1787280168444",
+      "nickname": "efsfasd",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T04:46:55.094Z"
     },
     {
       "id": "player-1787287986542",
       "nickname": "wsw",
+=======
+      "createdAt": "2026-08-21T02:42:48.444Z"
+    },
+    {
+      "id": "player-1787280195271",
+      "nickname": "sadasddascxzc",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T04:53:06.542Z"
     },
     {
       "id": "player-1787288157779",
       "nickname": "wswsw",
+=======
+      "createdAt": "2026-08-21T02:43:15.271Z"
+    },
+    {
+      "id": "player-1787283529269",
+      "nickname": "asdadswqwe",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T04:55:57.780Z"
     },
     {
       "id": "player-1787288235684",
       "nickname": "eded",
+=======
+      "createdAt": "2026-08-21T03:38:49.269Z"
+    },
+    {
+      "id": "player-1787283708369",
+      "nickname": "weqwerrtdfgdf",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T04:57:15.684Z"
     },
     {
@@ -199,19 +237,44 @@
     {
       "id": "player-1787308695512",
       "nickname": "jesus",
+=======
+      "createdAt": "2026-08-21T03:41:48.369Z"
+    },
+    {
+      "id": "player-1787284137633",
+      "nickname": "zxczxc",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-21T03:48:57.633Z"
+    },
+    {
+      "id": "player-1787284988493",
+      "nickname": "ttytree",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T10:38:15.513Z"
     },
     {
       "id": "player-1787308717841",
       "nickname": "ssd",
+=======
+      "createdAt": "2026-08-21T04:03:08.493Z"
+    },
+    {
+      "id": "player-1787285060543",
+      "nickname": "vxcvxcxcv",
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
+<<<<<<< HEAD
       "createdAt": "2026-08-21T10:38:37.841Z"
     },
     {
@@ -258,6 +321,9 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-08-21T11:05:06.225Z"
+=======
+      "createdAt": "2026-08-21T04:04:20.543Z"
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
     }
   ],
   "cards": [
@@ -1339,6 +1405,7 @@
       "endedAt": "2026-08-20T04:11:46.861Z"
     },
     {
+<<<<<<< HEAD
       "id": "battle-1787288953084",
       "playerId": "player-1787288856821",
       "playerNickname": "dee",
@@ -1360,6 +1427,29 @@
       ],
       "startedAt": "2026-08-21T05:07:43.835Z",
       "endedAt": "2026-08-21T05:09:13.078Z"
+=======
+      "id": "battle-1787284321264",
+      "playerId": "player-1787284137633",
+      "playerNickname": "zxczxc",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-018",
+        "card-017",
+        "card-016",
+        "card-011",
+        "card-012"
+      ],
+      "machineDeck": [
+        "card-013",
+        "card-019",
+        "card-004",
+        "card-009",
+        "card-014"
+      ],
+      "startedAt": "2026-08-21T03:49:57.588Z",
+      "endedAt": "2026-08-21T03:52:01.263Z"
+>>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
