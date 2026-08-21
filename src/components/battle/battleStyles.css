@@ -46,7 +46,7 @@
 }
 
 .battle-card {
-    width: 200px;
+    width: 170px;
     background: #1a1a2e;
     border: 2px solid #d4af37;
     border-radius: 10px;
@@ -56,7 +56,7 @@
 
 .battle-card-image {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 9 / 16;
     object-fit: cover;
     border-radius: 6px;
     margin-bottom: 0.5rem;
@@ -255,7 +255,7 @@
     }
 
     .battle-card {
-        width: 140px;
+        width: 115px;
         padding: 0.7rem;
     }
 

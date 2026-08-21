@@ -12,12 +12,22 @@
 }
 
 .deck-selector {
-    max-width: 900px;
+    max-width: 1400px;
+    width: 92%;
     margin: 2rem auto;
-    padding: 1.5rem;
+    padding: 2rem;
     color: #f5f0e6;
     font-family: 'Georgia', serif;
     text-align: center;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-image:
+        linear-gradient(rgba(15, 15, 26, 0.85), rgba(15, 15, 26, 0.85)),
+        url('/images/deck-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .deck-title {
@@ -27,8 +37,8 @@
 
 .deck-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.2rem;
     margin-bottom: 1.5rem;
 }
 
@@ -63,7 +73,7 @@
 
 .deck-tile-image {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 9 / 16;
     object-fit: cover;
     border-radius: 4px;
     background: #0f0f1a;
@@ -146,4 +156,16 @@
 .deck-confirm-button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+/* Responsive: reduce columnas en pantallas angostas para que las cartas no se aplasten */
+@media (max-width: 900px) {
+    .deck-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .deck-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

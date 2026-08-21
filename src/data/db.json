@@ -132,6 +132,33 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-08-20T04:13:58.540Z"
+    },
+    {
+      "id": "player-1787279378868",
+      "nickname": "aesdf",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T02:29:38.868Z"
+    },
+    {
+      "id": "player-1787280168444",
+      "nickname": "efsfasd",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T02:42:48.444Z"
+    },
+    {
+      "id": "player-1787280195271",
+      "nickname": "sadasddascxzc",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-21T02:43:15.271Z"
     }
   ],
   "cards": [
