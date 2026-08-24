@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "json-server --watch src/data/db.json --port 3000"
+    "server": "cp -n src/data/db.example.json src/data/db.json; json-server --watch src/data/db.json --port 3000"
   },
   "devDependencies": {
     "vite": "^5.4.0",

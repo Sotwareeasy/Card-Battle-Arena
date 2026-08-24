@@ -1,0 +1,1194 @@
+{
+  "admins": [
+    {
+      "id": "admin-001",
+      "username": "admin",
+      "password": "hogwarts2026"
+    }
+  ],
+  "players": [
+    {
+      "id": "5aIzbubaesE",
+      "nickname": "Fabian",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-19T02:25:46.915Z"
+    },
+    {
+      "id": "player-1787196345281",
+      "nickname": "asdads",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T03:25:45.281Z"
+    },
+    {
+      "id": "player-1787197678774",
+      "nickname": "dssfddsf",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T03:47:58.774Z"
+    },
+    {
+      "id": "player-1787199013390",
+      "nickname": "asdasd",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T04:10:13.390Z"
+    },
+    {
+      "id": "player-1787284137633",
+      "nickname": "zxczxc",
+      "points": 50,
+      "wins": 1,
+      "losses": 0,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-21T03:48:57.633Z"
+    },
+    {
+      "id": "player-1787189656201",
+      "nickname": "adssad",
+      "points": 10,
+      "wins": 0,
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T01:34:16.201Z"
+    },
+    {
+      "id": "player-1787192235575",
+      "nickname": "dfsfddsf",
+      "points": 10,
+      "wins": 0,
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T02:17:15.575Z"
+    },
+    {
+      "id": "player-1787288856821",
+      "nickname": "dee",
+      "points": 10,
+      "wins": 0,
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-21T05:07:36.821Z"
+    },
+    {
+      "id": "player-1787614380818",
+      "nickname": "jnnjnj",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-08-24T23:33:00.818Z"
+    }
+  ],
+  "cards": [
+    {
+      "id": "card-001",
+      "name": "Harry Potter",
+      "type": "Wizard",
+      "image": "/images/cards/Harry_Potter.png",
+      "description": "Joven mago de Hogwarts conocido por su valentía.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Desmaius",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Expelliarmus",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Incendio",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Confringo",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Protego",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Expecto Patronum",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-002",
+      "name": "Hermione Granger",
+      "type": "Student",
+      "image": "/images/cards/Hermione.png",
+      "description": "Bruja brillante y meticulosa.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Densaugeo",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Levicorpus",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Silencio",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Bombarda",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Protego Maxima",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Arresto Momentum",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-003",
+      "name": "Ron Weasley",
+      "type": "Wizard",
+      "image": "/images/cards/Ron.png",
+      "description": "Leal amigo de Harry.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Flipendo",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Impedimenta",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Reducto",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Diffindo",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Lealtad",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Encantamiento Ignífero",
+        "baseDamage": 58,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-004",
+      "name": "Albus Dumbledore",
+      "type": "Professor",
+      "image": "/images/cards/Albus.png",
+      "description": "Director de Hogwarts.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Ventus",
+          "baseDamage": 25
+        },
+        {
+          "id": "attack-02",
+          "name": "Glacius",
+          "baseDamage": 35
+        },
+        {
+          "id": "attack-03",
+          "name": "Depulso",
+          "baseDamage": 42
+        },
+        {
+          "id": "attack-04",
+          "name": "Fulguris",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo del Director",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Fuego Maldito",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-005",
+      "name": "Severus Snape",
+      "type": "Professor",
+      "image": "/images/cards/Severus.png",
+      "description": "Maestro de pociones.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Langlock",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Obscuro",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Furnunculus",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Sectumsempra",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Oclumancia",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Corte Silencioso",
+        "baseDamage": 68,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-006",
+      "name": "Minerva McGonagall",
+      "type": "Professor",
+      "image": "/images/cards/Minerva.png",
+      "description": "Subdirectora de Hogwarts.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Verdimillious",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Piertotum Locomotor",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Duro",
+          "baseDamage": 38
+        },
+        {
+          "id": "attack-04",
+          "name": "Avifors",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Gryffindor",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Transfiguración de Combate",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-007",
+      "name": "Sirius Black",
+      "type": "Auror",
+      "image": "/images/cards/Sirius.png",
+      "description": "Animago rebelde y leal.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Everte Statum",
+          "baseDamage": 22
+        },
+        {
+          "id": "attack-02",
+          "name": "Relashio",
+          "baseDamage": 32
+        },
+        {
+          "id": "attack-03",
+          "name": "Baubillious",
+          "baseDamage": 42
+        },
+        {
+          "id": "attack-04",
+          "name": "Tarantallegra",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo Animago",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Furia del Perro Negro",
+        "baseDamage": 66,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-008",
+      "name": "Rubeus Hagrid",
+      "type": "Magical Being",
+      "image": "/images/cards/rubeus.png",
+      "description": "Guardián de las llaves de Hogwarts.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Golpe de Paraguas Roto",
+          "baseDamage": 22
+        },
+        {
+          "id": "attack-02",
+          "name": "Empuje de Gigante",
+          "baseDamage": 32
+        },
+        {
+          "id": "attack-03",
+          "name": "Embestida",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Fuerza Bruta",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Resistencia del Guardián",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Furia del Semigigante",
+        "baseDamage": 62,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-009",
+      "name": "Lord Voldemort",
+      "type": "Dark Wizard",
+      "image": "/images/cards/voldemort.png",
+      "description": "El mago tenebroso más temido.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Crucio Menor",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-02",
+          "name": "Serpensortia",
+          "baseDamage": 36
+        },
+        {
+          "id": "attack-03",
+          "name": "Morsmordre",
+          "baseDamage": 44
+        },
+        {
+          "id": "attack-04",
+          "name": "Legeremancia Ofensiva",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de la Oscuridad",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Avada Kedavra",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-010",
+      "name": "Bellatrix Lestrange",
+      "type": "Dark Wizard",
+      "image": "/images/cards/Bellatrix.png",
+      "description": "Mortífaga fanática y letal.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Risa Cruel",
+          "baseDamage": 28
+        },
+        {
+          "id": "attack-02",
+          "name": "Fiendfyre Menor",
+          "baseDamage": 34
+        },
+        {
+          "id": "attack-03",
+          "name": "Maldición Errante",
+          "baseDamage": 42
+        },
+        {
+          "id": "attack-04",
+          "name": "Golpe Sádico",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo Errático",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Maldición Cruciatus",
+        "baseDamage": 68,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-011",
+      "name": "Draco Malfoy",
+      "type": "Wizard",
+      "image": "/images/cards/Draco.png",
+      "description": "Estudiante de Slytherin ambicioso.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Serpensortia Menor",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Densaugeo Inverso",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Confringo Ligero",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Petrificus Totalus",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Slytherin",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Maleficio Vinculante",
+        "baseDamage": 58,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-012",
+      "name": "Lucius Malfoy",
+      "type": "Dark Wizard",
+      "image": "/images/cards/Lucius.png",
+      "description": "Aristócrata influyente y calculador.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Golpe de Bastón",
+          "baseDamage": 22
+        },
+        {
+          "id": "attack-02",
+          "name": "Imperio Sutil",
+          "baseDamage": 32
+        },
+        {
+          "id": "attack-03",
+          "name": "Maleficio Calculado",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Golpe de Influencia",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Sangre Pura",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Encantamiento del Bastón Serpiente",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-013",
+      "name": "Dobby",
+      "type": "Magical Being",
+      "image": "/images/cards/dobby.png",
+      "description": "Elfo doméstico libre y leal.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Golpe Elfico",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Aparición Sorpresa",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Magia Elemental Menor",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Estallido de Magia Libre",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Aparición Defensiva",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Magia Élfica Protectora",
+        "baseDamage": 55,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-014",
+      "name": "Dementor",
+      "type": "Creature",
+      "image": "/images/cards/Dementor.png",
+      "description": "Criatura oscura que debilita a quien se le acerca.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Roce Gélido",
+          "baseDamage": 22
+        },
+        {
+          "id": "attack-02",
+          "name": "Aliento Helado",
+          "baseDamage": 32
+        },
+        {
+          "id": "attack-03",
+          "name": "Desesperación",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Vacío Emocional",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Niebla Oscura",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Absorción del Alma",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-015",
+      "name": "Basilisco",
+      "type": "Creature",
+      "image": "/images/cards/Basilisco.png",
+      "description": "Serpiente gigante de la Cámara de los Secretos.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Mordida Venenosa",
+          "baseDamage": 28
+        },
+        {
+          "id": "attack-02",
+          "name": "Coletazo",
+          "baseDamage": 36
+        },
+        {
+          "id": "attack-03",
+          "name": "Siseo Paralizante",
+          "baseDamage": 44
+        },
+        {
+          "id": "attack-04",
+          "name": "Embestida Colosal",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escamas Impenetrables",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Mirada Petrificante",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-016",
+      "name": "Fawkes",
+      "type": "Creature",
+      "image": "/images/cards/fenix.png",
+      "description": "Fénix leal a Dumbledore.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Picotazo Flamígero",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Aleteo Ardiente",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Garras de Fuego",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Vuelo en Llamas",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Plumaje Protector",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Llanto de Fénix",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-017",
+      "name": "Remus Lupin",
+      "type": "Professor",
+      "image": "/images/cards/Remus.png",
+      "description": "Profesor de Defensa Contra las Artes Oscuras.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Riddikulus",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Expecto Patronum Menor",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Zarpazo Contenido",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Golpe Lobuno",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo del Merodeador",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Furia del Licántropo",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-018",
+      "name": "Luna Lovegood",
+      "type": "Student",
+      "image": "/images/cards/Luna.png",
+      "description": "Bruja excéntrica y perceptiva.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Rictusempra",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Encantamiento Distractor",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Bombarda Máxima Menor",
+          "baseDamage": 38
+        },
+        {
+          "id": "attack-04",
+          "name": "Golpe Inesperado",
+          "baseDamage": 46
+        }
+      ],
+      "defense": {
+        "name": "Escudo Excéntrico",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Visión de los Thestrals",
+        "baseDamage": 58,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-019",
+      "name": "Neville Longbottom",
+      "type": "Wizard",
+      "image": "/images/cards/Neville.png",
+      "description": "Estudiante tímido y valiente defensor.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Herbivicus",
+          "baseDamage": 20
+        },
+        {
+          "id": "attack-02",
+          "name": "Golpe de Coraje",
+          "baseDamage": 30
+        },
+        {
+          "id": "attack-03",
+          "name": "Estupefacción Firme",
+          "baseDamage": 40
+        },
+        {
+          "id": "attack-04",
+          "name": "Corte Decidido",
+          "baseDamage": 48
+        }
+      ],
+      "defense": {
+        "name": "Coraje de Gryffindor",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Golpe de la Espada de Gryffindor",
+        "baseDamage": 62,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-020",
+      "name": "Gellert Grindelwald",
+      "type": "Dark Wizard",
+      "image": "/images/cards/Gellert.png",
+      "description": "Mago tenebroso visionario precursor de Voldemort.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "attack-01",
+          "name": "Golpe de la Varita de Saúco",
+          "baseDamage": 28
+        },
+        {
+          "id": "attack-02",
+          "name": "Fuego Elemental Menor",
+          "baseDamage": 36
+        },
+        {
+          "id": "attack-03",
+          "name": "Maleficio Visionario",
+          "baseDamage": 44
+        },
+        {
+          "id": "attack-04",
+          "name": "Golpe Ancestral",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de la Varita de Saúco",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Fuego Elemental Oscuro",
+        "baseDamage": 68,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/spell-attack.mp3",
+        "defense": "/sounds/magic-defense.mp3",
+        "special": "/sounds/special-spell.mp3",
+        "defeated": "/sounds/card-defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    }
+  ],
+  "battles": [
+    {
+      "id": "battle-1787196457774",
+      "playerId": "player-1787196345281",
+      "playerNickname": "asdads",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-002",
+        "card-001",
+        "card-008",
+        "card-009",
+        "card-010"
+      ],
+      "machineDeck": [
+        "card-016",
+        "card-003",
+        "card-011",
+        "card-018",
+        "card-019"
+      ],
+      "startedAt": "2026-08-20T03:25:52.766Z",
+      "endedAt": "2026-08-20T03:27:37.773Z"
+    },
+    {
+      "id": "battle-1787197777020",
+      "playerId": "player-1787197678774",
+      "playerNickname": "dssfddsf",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005",
+        "card-006"
+      ],
+      "machineDeck": [
+        "card-010",
+        "card-019",
+        "card-011",
+        "card-013",
+        "card-012"
+      ],
+      "startedAt": "2026-08-20T03:48:09.698Z",
+      "endedAt": "2026-08-20T03:49:37.018Z"
+    },
+    {
+      "id": "battle-1787199106862",
+      "playerId": "player-1787199013390",
+      "playerNickname": "asdasd",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-003",
+        "card-005",
+        "card-004",
+        "card-011",
+        "card-010"
+      ],
+      "machineDeck": [
+        "card-009",
+        "card-019",
+        "card-013",
+        "card-008",
+        "card-012"
+      ],
+      "startedAt": "2026-08-20T04:10:20.205Z",
+      "endedAt": "2026-08-20T04:11:46.861Z"
+    },
+    {
+      "id": "battle-1787284321264",
+      "playerId": "player-1787284137633",
+      "playerNickname": "zxczxc",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-018",
+        "card-017",
+        "card-016",
+        "card-011",
+        "card-012"
+      ],
+      "machineDeck": [
+        "card-013",
+        "card-019",
+        "card-004",
+        "card-009",
+        "card-014"
+      ],
+      "startedAt": "2026-08-21T03:49:57.588Z",
+      "endedAt": "2026-08-21T03:52:01.263Z"
+    },
+    {
+      "id": "battle-1787189799114",
+      "playerId": "player-1787189656201",
+      "playerNickname": "adssad",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-018",
+        "card-017"
+      ],
+      "machineDeck": [
+        "card-016",
+        "card-006",
+        "card-009",
+        "card-019",
+        "card-007"
+      ],
+      "startedAt": "2026-08-20T01:34:21.806Z",
+      "endedAt": "2026-08-20T01:36:39.113Z"
+    },
+    {
+      "id": "battle-1787288953084",
+      "playerId": "player-1787288856821",
+      "playerNickname": "dee",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-018",
+        "card-011",
+        "card-019",
+        "card-012",
+        "card-014"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-008",
+        "card-003",
+        "card-006",
+        "card-013"
+      ],
+      "startedAt": "2026-08-21T05:07:43.835Z",
+      "endedAt": "2026-08-21T05:09:13.078Z"
+    }
+  ]
+}
