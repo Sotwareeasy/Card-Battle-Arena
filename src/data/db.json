@@ -17,87 +17,6 @@
       "createdAt": "2026-08-19T02:25:46.915Z"
     },
     {
-      "id": "VnPAqfJPuVM",
-      "nickname": "KIEk36",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-19T02:31:36.555Z"
-    },
-    {
-      "id": "c-KQpWKsENc",
-      "nickname": "fabian",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-19T03:17:42.857Z"
-    },
-    {
-      "id": "Z_FoOUjOx_Y",
-      "nickname": "Jaurl",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-19T03:27:47.447Z"
-    },
-    {
-      "id": "v569Y2VtOKY",
-      "nickname": "asdqew",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-19T03:31:17.644Z"
-    },
-    {
-      "id": "player-1787188718163",
-      "nickname": "kike",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-20T01:18:38.163Z"
-    },
-    {
-      "id": "player-1787189040278",
-      "nickname": "kjgv",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-20T01:24:00.278Z"
-    },
-    {
-      "id": "player-1787189110264",
-      "nickname": "asdasdasd",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-20T01:25:10.264Z"
-    },
-    {
-      "id": "player-1787189656201",
-      "nickname": "adssad",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T01:34:16.201Z"
-    },
-    {
-      "id": "player-1787192235575",
-      "nickname": "dfsfddsf",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T02:17:15.575Z"
-    },
-    {
       "id": "player-1787196345281",
       "nickname": "asdads",
       "points": 50,
@@ -125,105 +44,31 @@
       "createdAt": "2026-08-20T04:10:13.390Z"
     },
     {
-      "id": "player-1787199238540",
-      "nickname": "sddasdd",
-      "points": 0,
-      "wins": 0,
+      "id": "player-1787284137633",
+      "nickname": "zxczxc",
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-20T04:13:58.540Z"
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-21T03:48:57.633Z"
     },
     {
-<<<<<<< HEAD
-      "id": "player-1787287086482",
-      "nickname": "Nicolas",
-=======
-      "id": "player-1787279378868",
-      "nickname": "aesdf",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
-      "points": 0,
+      "id": "player-1787189656201",
+      "nickname": "adssad",
+      "points": 10,
       "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T04:38:06.482Z"
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T01:34:16.201Z"
     },
     {
-      "id": "player-1787287615094",
-      "nickname": "NicoF",
-=======
-      "createdAt": "2026-08-21T02:29:38.868Z"
-    },
-    {
-      "id": "player-1787280168444",
-      "nickname": "efsfasd",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
-      "points": 0,
+      "id": "player-1787192235575",
+      "nickname": "dfsfddsf",
+      "points": 10,
       "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T04:46:55.094Z"
-    },
-    {
-      "id": "player-1787287986542",
-      "nickname": "wsw",
-=======
-      "createdAt": "2026-08-21T02:42:48.444Z"
-    },
-    {
-      "id": "player-1787280195271",
-      "nickname": "sadasddascxzc",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T04:53:06.542Z"
-    },
-    {
-      "id": "player-1787288157779",
-      "nickname": "wswsw",
-=======
-      "createdAt": "2026-08-21T02:43:15.271Z"
-    },
-    {
-      "id": "player-1787283529269",
-      "nickname": "asdadswqwe",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T04:55:57.780Z"
-    },
-    {
-      "id": "player-1787288235684",
-      "nickname": "eded",
-=======
-      "createdAt": "2026-08-21T03:38:49.269Z"
-    },
-    {
-      "id": "player-1787283708369",
-      "nickname": "weqwerrtdfgdf",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T04:57:15.684Z"
-    },
-    {
-      "id": "player-1787288302277",
-      "nickname": "ede",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-21T04:58:22.277Z"
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-08-20T02:17:15.575Z"
     },
     {
       "id": "player-1787288856821",
@@ -235,95 +80,13 @@
       "createdAt": "2026-08-21T05:07:36.821Z"
     },
     {
-      "id": "player-1787308695512",
-      "nickname": "jesus",
-=======
-      "createdAt": "2026-08-21T03:41:48.369Z"
-    },
-    {
-      "id": "player-1787284137633",
-      "nickname": "zxczxc",
-      "points": 50,
-      "wins": 1,
-      "losses": 0,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-21T03:48:57.633Z"
-    },
-    {
-      "id": "player-1787284988493",
-      "nickname": "ttytree",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
+      "id": "player-1787614380818",
+      "nickname": "jnnjnj",
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T10:38:15.513Z"
-    },
-    {
-      "id": "player-1787308717841",
-      "nickname": "ssd",
-=======
-      "createdAt": "2026-08-21T04:03:08.493Z"
-    },
-    {
-      "id": "player-1787285060543",
-      "nickname": "vxcvxcxcv",
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-<<<<<<< HEAD
-      "createdAt": "2026-08-21T10:38:37.841Z"
-    },
-    {
-      "id": "player-1787308894088",
-      "nickname": "hyyhyhy",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-21T10:41:34.089Z"
-    },
-    {
-      "id": "player-1787308993246",
-      "nickname": "rgr",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-21T10:43:13.246Z"
-    },
-    {
-      "id": "player-1787309312986",
-      "nickname": "jyy",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-21T10:48:32.987Z"
-    },
-    {
-      "id": "player-1787309363370",
-      "nickname": "ththt",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-21T10:49:23.370Z"
-    },
-    {
-      "id": "player-1787310306224",
-      "nickname": "wdw",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-21T11:05:06.225Z"
-=======
-      "createdAt": "2026-08-21T04:04:20.543Z"
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
+      "createdAt": "2026-08-24T23:33:00.818Z"
     }
   ],
   "cards": [
@@ -332,7 +95,7 @@
       "name": "Harry Potter",
       "type": "Wizard",
       "image": "/images/cards/Harry_Potter.png",
-      "description": "Joven mago de Hogwarts conocido por su valentía y capacidad de enfrentarse a las artes oscuras.",
+      "description": "Joven mago de Hogwarts conocido por su valentía.",
       "hp": 250,
       "attacks": [
         {
@@ -380,7 +143,7 @@
       "name": "Hermione Granger",
       "type": "Student",
       "image": "/images/cards/Hermione.png",
-      "description": "Bruja brillante y meticulosa, reconocida por su dominio teórico y estrategia en combate.",
+      "description": "Bruja brillante y meticulosa.",
       "hp": 250,
       "attacks": [
         {
@@ -428,7 +191,7 @@
       "name": "Ron Weasley",
       "type": "Wizard",
       "image": "/images/cards/Ron.png",
-      "description": "Leal amigo de Harry, conocido por su resistencia emocional y capacidad de sacrificio en batalla.",
+      "description": "Leal amigo de Harry.",
       "hp": 250,
       "attacks": [
         {
@@ -476,7 +239,7 @@
       "name": "Albus Dumbledore",
       "type": "Professor",
       "image": "/images/cards/Albus.png",
-      "description": "Director de Hogwarts y mago considerado uno de los más poderosos de su generación.",
+      "description": "Director de Hogwarts.",
       "hp": 250,
       "attacks": [
         {
@@ -524,7 +287,7 @@
       "name": "Severus Snape",
       "type": "Professor",
       "image": "/images/cards/Severus.png",
-      "description": "Maestro de pociones con un dominio profundo de hechizos ofensivos y magia oscura.",
+      "description": "Maestro de pociones.",
       "hp": 250,
       "attacks": [
         {
@@ -572,7 +335,7 @@
       "name": "Minerva McGonagall",
       "type": "Professor",
       "image": "/images/cards/Minerva.png",
-      "description": "Subdirectora de Hogwarts y experta en transfiguración, firme y disciplinada en combate.",
+      "description": "Subdirectora de Hogwarts.",
       "hp": 250,
       "attacks": [
         {
@@ -620,7 +383,7 @@
       "name": "Sirius Black",
       "type": "Auror",
       "image": "/images/cards/Sirius.png",
-      "description": "Animago rebelde y leal, combate con agresividad y astucia forjadas en Azkaban.",
+      "description": "Animago rebelde y leal.",
       "hp": 250,
       "attacks": [
         {
@@ -668,7 +431,7 @@
       "name": "Rubeus Hagrid",
       "type": "Magical Being",
       "image": "/images/cards/rubeus.png",
-      "description": "Guardián de las llaves de Hogwarts, de fuerza descomunal y gran corazón.",
+      "description": "Guardián de las llaves de Hogwarts.",
       "hp": 250,
       "attacks": [
         {
@@ -716,7 +479,7 @@
       "name": "Lord Voldemort",
       "type": "Dark Wizard",
       "image": "/images/cards/voldemort.png",
-      "description": "El mago tenebroso más temido de su era, de poder ofensivo devastador.",
+      "description": "El mago tenebroso más temido.",
       "hp": 250,
       "attacks": [
         {
@@ -764,7 +527,7 @@
       "name": "Bellatrix Lestrange",
       "type": "Dark Wizard",
       "image": "/images/cards/Bellatrix.png",
-      "description": "Mortífaga fanática y letal, ataca con ferocidad impredecible.",
+      "description": "Mortífaga fanática y letal.",
       "hp": 250,
       "attacks": [
         {
@@ -812,7 +575,7 @@
       "name": "Draco Malfoy",
       "type": "Wizard",
       "image": "/images/cards/Draco.png",
-      "description": "Estudiante de Slytherin, ambicioso y hábil, en constante búsqueda de reconocimiento.",
+      "description": "Estudiante de Slytherin ambicioso.",
       "hp": 250,
       "attacks": [
         {
@@ -860,7 +623,7 @@
       "name": "Lucius Malfoy",
       "type": "Dark Wizard",
       "image": "/images/cards/Lucius.png",
-      "description": "Aristócrata influyente y calculador, combate con precisión fría y recursos ocultos.",
+      "description": "Aristócrata influyente y calculador.",
       "hp": 250,
       "attacks": [
         {
@@ -908,7 +671,7 @@
       "name": "Dobby",
       "type": "Magical Being",
       "image": "/images/cards/dobby.png",
-      "description": "Elfo doméstico libre, leal y sorprendentemente poderoso cuando defiende a sus amigos.",
+      "description": "Elfo doméstico libre y leal.",
       "hp": 250,
       "attacks": [
         {
@@ -956,7 +719,7 @@
       "name": "Dementor",
       "type": "Creature",
       "image": "/images/cards/Dementor.png",
-      "description": "Criatura oscura que se alimenta de emociones positivas, debilitando a quien se le acerca.",
+      "description": "Criatura oscura que debilita a quien se le acerca.",
       "hp": 250,
       "attacks": [
         {
@@ -1004,7 +767,7 @@
       "name": "Basilisco",
       "type": "Creature",
       "image": "/images/cards/Basilisco.png",
-      "description": "Serpiente gigante de la Cámara de los Secretos, temida por su mirada mortal.",
+      "description": "Serpiente gigante de la Cámara de los Secretos.",
       "hp": 250,
       "attacks": [
         {
@@ -1052,7 +815,7 @@
       "name": "Fawkes",
       "type": "Creature",
       "image": "/images/cards/fenix.png",
-      "description": "Fénix leal a Dumbledore, capaz de desatar llamas protectoras en combate.",
+      "description": "Fénix leal a Dumbledore.",
       "hp": 250,
       "attacks": [
         {
@@ -1100,7 +863,7 @@
       "name": "Remus Lupin",
       "type": "Professor",
       "image": "/images/cards/Remus.png",
-      "description": "Profesor de Defensa Contra las Artes Oscuras, sereno pero con una fuerza interior salvaje.",
+      "description": "Profesor de Defensa Contra las Artes Oscuras.",
       "hp": 250,
       "attacks": [
         {
@@ -1148,7 +911,7 @@
       "name": "Luna Lovegood",
       "type": "Student",
       "image": "/images/cards/Luna.png",
-      "description": "Bruja excéntrica y perceptiva, ve lo que otros pasan por alto y ataca de forma impredecible.",
+      "description": "Bruja excéntrica y perceptiva.",
       "hp": 250,
       "attacks": [
         {
@@ -1196,7 +959,7 @@
       "name": "Neville Longbottom",
       "type": "Wizard",
       "image": "/images/cards/Neville.png",
-      "description": "Estudiante tímido que se convierte en un valiente defensor de sus ideales.",
+      "description": "Estudiante tímido y valiente defensor.",
       "hp": 250,
       "attacks": [
         {
@@ -1244,7 +1007,7 @@
       "name": "Gellert Grindelwald",
       "type": "Dark Wizard",
       "image": "/images/cards/Gellert.png",
-      "description": "Mago tenebroso visionario, precursor de Voldemort, de ambición y poder ofensivo notables.",
+      "description": "Mago tenebroso visionario precursor de Voldemort.",
       "hp": 250,
       "attacks": [
         {
@@ -1289,52 +1052,6 @@
     }
   ],
   "battles": [
-    {
-      "id": "battle-1787189799114",
-      "playerId": "player-1787189656201",
-      "playerNickname": "adssad",
-      "result": "loss",
-      "pointsAwarded": 10,
-      "playerDeck": [
-        "card-001",
-        "card-002",
-        "card-003",
-        "card-018",
-        "card-017"
-      ],
-      "machineDeck": [
-        "card-016",
-        "card-006",
-        "card-009",
-        "card-019",
-        "card-007"
-      ],
-      "startedAt": "2026-08-20T01:34:21.806Z",
-      "endedAt": "2026-08-20T01:36:39.113Z"
-    },
-    {
-      "id": "battle-1787192334811",
-      "playerId": "player-1787192235575",
-      "playerNickname": "dfsfddsf",
-      "result": "loss",
-      "pointsAwarded": 10,
-      "playerDeck": [
-        "card-002",
-        "card-003",
-        "card-004",
-        "card-011",
-        "card-009"
-      ],
-      "machineDeck": [
-        "card-013",
-        "card-016",
-        "card-005",
-        "card-006",
-        "card-010"
-      ],
-      "startedAt": "2026-08-20T02:17:19.962Z",
-      "endedAt": "2026-08-20T02:18:54.810Z"
-    },
     {
       "id": "battle-1787196457774",
       "playerId": "player-1787196345281",
@@ -1405,29 +1122,6 @@
       "endedAt": "2026-08-20T04:11:46.861Z"
     },
     {
-<<<<<<< HEAD
-      "id": "battle-1787288953084",
-      "playerId": "player-1787288856821",
-      "playerNickname": "dee",
-      "result": "loss",
-      "pointsAwarded": 10,
-      "playerDeck": [
-        "card-018",
-        "card-011",
-        "card-019",
-        "card-012",
-        "card-014"
-      ],
-      "machineDeck": [
-        "card-015",
-        "card-008",
-        "card-003",
-        "card-006",
-        "card-013"
-      ],
-      "startedAt": "2026-08-21T05:07:43.835Z",
-      "endedAt": "2026-08-21T05:09:13.078Z"
-=======
       "id": "battle-1787284321264",
       "playerId": "player-1787284137633",
       "playerNickname": "zxczxc",
@@ -1449,8 +1143,52 @@
       ],
       "startedAt": "2026-08-21T03:49:57.588Z",
       "endedAt": "2026-08-21T03:52:01.263Z"
->>>>>>> 1f4ad4b11632b78b1127d7e418bc4dcb8769079f
+    },
+    {
+      "id": "battle-1787189799114",
+      "playerId": "player-1787189656201",
+      "playerNickname": "adssad",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-018",
+        "card-017"
+      ],
+      "machineDeck": [
+        "card-016",
+        "card-006",
+        "card-009",
+        "card-019",
+        "card-007"
+      ],
+      "startedAt": "2026-08-20T01:34:21.806Z",
+      "endedAt": "2026-08-20T01:36:39.113Z"
+    },
+    {
+      "id": "battle-1787288953084",
+      "playerId": "player-1787288856821",
+      "playerNickname": "dee",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-018",
+        "card-011",
+        "card-019",
+        "card-012",
+        "card-014"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-008",
+        "card-003",
+        "card-006",
+        "card-013"
+      ],
+      "startedAt": "2026-08-21T05:07:43.835Z",
+      "endedAt": "2026-08-21T05:09:13.078Z"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
