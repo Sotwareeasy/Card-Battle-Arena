@@ -246,7 +246,7 @@ El volumen persistente es lo que garantiza que los datos (jugadores, puntajes, h
 
 ## 👤 Autor
 
-Proyecto académico desarrollado con 🪄 por **Felipe**.
+Proyecto académico desarrollado con 🪄 por **Felipe - Fabian**.
 
 <div align="center">
 
