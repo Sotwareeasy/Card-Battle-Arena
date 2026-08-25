@@ -46,7 +46,8 @@ class BattleArena extends HTMLElement {
                     <span class="battle-vs">VS</span>
                     <battle-card class="battle-side battle-side--machine"></battle-card>
                 </div>
-                <battle-controls></battle-controls>
+                                <battle-controls></battle-controls>
+                <button class="battle-surrender-btn">🏳️ Terminar Batalla</button>
             </section>
         `;
     }
@@ -64,10 +65,17 @@ class BattleArena extends HTMLElement {
             this.handleStateChange();
         });
 
-        this.addEventListener('action-special', () => {
+                this.addEventListener('action-special', () => {
             if (!this.isPlayerTurn()) return;
             engine.performSpecial(this.state, 'player');
             this.handleStateChange();
+        });
+
+        this.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('battle-surrender-btn')) return;
+            if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
+            this.state.status = engine.BATTLE_STATUS.MACHINE_WON;
+            this.handleBattleEnd();
         });
     }
 

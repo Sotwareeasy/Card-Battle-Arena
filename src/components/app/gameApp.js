@@ -7,6 +7,7 @@ import { postBattle } from '../../api/battlesApi.js';
 
 const SCREEN = {
     REGISTER: 'register',
+    LOGIN: 'login',
     DECK_SELECTION: 'deck-selection',
     BATTLE: 'battle',
     RESULTS: 'results',
@@ -46,7 +47,10 @@ class GameApp extends HTMLElement {
                 <p>Harry Potter Edition</p>
                 ${this.currentPlayer ? `<p class="game-header-player">Jugador: ${this.currentPlayer.nickname}</p>` : ''}
                 ${this.currentAdmin ? `<p class="game-header-player">Admin: ${this.currentAdmin.username}</p>` : ''}
-                <button type="button" class="game-header-admin-link" data-action="go-admin">⚙ Admin</button>
+                <div class="game-header-actions">
+                    ${this.currentPlayer ? `<button type="button" class="game-header-admin-link" data-action="logout">🚪 Cerrar sesión</button>` : ''}
+                    <button type="button" class="game-header-admin-link" data-action="go-admin">⚙ Admin</button>
+                </div>
             </header>
             <div class="game-screen"></div>
         `;
@@ -58,6 +62,11 @@ class GameApp extends HTMLElement {
 
         if (this.currentScreen === SCREEN.REGISTER) {
             screenContainer.innerHTML = '<player-register></player-register>';
+            return;
+        }
+
+        if (this.currentScreen === SCREEN.LOGIN) {
+            screenContainer.innerHTML = '<player-login></player-login>';
             return;
         }
 
@@ -117,7 +126,8 @@ class GameApp extends HTMLElement {
                         Partidas: ${this.currentPlayer.gamesPlayed}
                     </p>
                     ${this.saveError ? `<p class="auth-message auth-message--error">${this.saveError}</p>` : ''}
-                    <button type="button" class="auth-button leaderboard-nav-btn">Ver leaderboard</button>
+                                        <button type="button" class="auth-button leaderboard-nav-btn">Ver leaderboard</button>
+                    <button type="button" class="auth-button play-again-btn">Jugar de nuevo</button>
                 `}
             </section>
         `;
@@ -127,6 +137,17 @@ class GameApp extends HTMLElement {
         this.addEventListener('player-registered', (event) => {
             this.currentPlayer = event.detail.player;
             this.currentScreen = SCREEN.DECK_SELECTION;
+            this.render();
+        });
+
+        this.addEventListener('player-logged-in', (event) => {
+            this.currentPlayer = event.detail.player;
+            this.currentScreen = SCREEN.DECK_SELECTION;
+            this.render();
+        });
+
+        this.addEventListener('switch-auth-screen', (event) => {
+            this.currentScreen = event.detail.screen === 'login' ? SCREEN.LOGIN : SCREEN.REGISTER;
             this.render();
         });
 
@@ -142,12 +163,24 @@ class GameApp extends HTMLElement {
         });
 
         this.addEventListener('click', (event) => {
-            if (event.target.classList.contains('leaderboard-nav-btn')) {
+                        if (event.target.classList.contains('leaderboard-nav-btn')) {
                 this.currentScreen = SCREEN.LEADERBOARD;
+                this.render();
+            }
+            if (event.target.classList.contains('play-again-btn') || event.target.classList.contains('leaderboard-play-again-btn')) {
+                this.currentScreen = SCREEN.DECK_SELECTION;
                 this.render();
             }
             if (event.target.dataset.action === 'go-admin') {
                 this.currentScreen = this.currentAdmin ? SCREEN.ADMIN_PANEL : SCREEN.ADMIN_LOGIN;
+                this.render();
+            }
+            if (event.target.dataset.action === 'logout') {
+                this.currentPlayer = null;
+                this.playerDeck = null;
+                this.machineDeck = null;
+                this.lastResult = null;
+                this.currentScreen = SCREEN.LOGIN;
                 this.render();
             }
         });

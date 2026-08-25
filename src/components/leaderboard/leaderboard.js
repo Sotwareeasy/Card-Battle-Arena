@@ -66,7 +66,8 @@ class LeaderboardView extends HTMLElement {
                 <h2 class="leaderboard-title">🏆 Leaderboard</h2>
                 <ol class="leaderboard-list">
                     ${this.players.map((player, index) => this.renderPlayerRow(player, index)).join('')}
-                </ol>
+                                </ol>
+                <button type="button" class="leaderboard-play-again-btn">⚔️ Jugar de nuevo</button>
             </section>
         `;
     }

@@ -3,7 +3,7 @@
 // valida el nickname, verifica duplicados contra la API y crea el jugador.
 
 import { getPlayerByNickname, postPlayer } from '../../api/playersApi.js';
-import { validateNickname } from '../../utils/validators.js';
+import { validateNickname, validatePassword } from '../../utils/validators.js';
 import './injectAuthStyles.js';
 
 const STATE = {
@@ -39,6 +39,26 @@ class PlayerRegister extends HTMLElement {
                         ${this.state === STATE.LOADING ? 'disabled' : ''}
                     />
 
+                    <label for="password-input" class="auth-label">Contraseña</label>
+                    <input
+                        id="password-input"
+                        name="password"
+                        type="password"
+                        class="auth-input"
+                        autocomplete="new-password"
+                        ${this.state === STATE.LOADING ? 'disabled' : ''}
+                    />
+
+                    <label for="password-confirm-input" class="auth-label">Confirmar contraseña</label>
+                    <input
+                        id="password-confirm-input"
+                        name="passwordConfirm"
+                        type="password"
+                        class="auth-input"
+                        autocomplete="new-password"
+                        ${this.state === STATE.LOADING ? 'disabled' : ''}
+                    />
+
                     <button type="submit" class="auth-button" ${this.state === STATE.LOADING ? 'disabled' : ''}>
                         ${this.state === STATE.LOADING ? 'Verificando...' : 'Registrarme'}
                     </button>
@@ -46,6 +66,10 @@ class PlayerRegister extends HTMLElement {
 
                 ${this.state === STATE.ERROR ? `<p class="auth-message auth-message--error">${this.errorMessage}</p>` : ''}
                 ${this.state === STATE.SUCCESS ? `<p class="auth-message auth-message--success">¡Bienvenido, mago! Registro exitoso.</p>` : ''}
+
+                <p class="auth-switch">¿Ya tienes cuenta?
+                    <button type="button" class="auth-link" data-action="switch-login">Inicia sesión</button>
+                </p>
             </section>
         `;
     }
@@ -53,16 +77,38 @@ class PlayerRegister extends HTMLElement {
     configurarEventos() {
         const form = this.querySelector('.auth-form');
         form.addEventListener('submit', (event) => this.handleSubmit(event));
+
+        this.querySelector('[data-action="switch-login"]').addEventListener('click', () => {
+            this.dispatchEvent(new CustomEvent('switch-auth-screen', {
+                detail: { screen: 'login' },
+                bubbles: true
+            }));
+        });
     }
 
     async handleSubmit(event) {
         event.preventDefault();
 
-        const input = this.querySelector('#nickname-input');
-        const validation = validateNickname(input.value);
+        const nicknameInput = this.querySelector('#nickname-input');
+        const passwordInput = this.querySelector('#password-input');
+        const passwordConfirmInput = this.querySelector('#password-confirm-input');
+
+        const validation = validateNickname(nicknameInput.value);
 
         if (!validation.valid) {
             this.setError(validation.message);
+            return;
+        }
+
+        const passwordValidation = validatePassword(passwordInput.value);
+
+        if (!passwordValidation.valid) {
+            this.setError(passwordValidation.message);
+            return;
+        }
+
+        if (passwordInput.value !== passwordConfirmInput.value) {
+            this.setError('Las contraseñas no coinciden.');
             return;
         }
 
@@ -79,6 +125,7 @@ class PlayerRegister extends HTMLElement {
             const newPlayer = {
                 id: `player-${Date.now()}`,
                 nickname: validation.value,
+                password: passwordValidation.value,
                 points: 0,
                 wins: 0,
                 losses: 0,

@@ -6,6 +6,7 @@
 import './components/app/gameApp.js';
 import './components/app/toastMessage.js';
 import './components/auth/playerRegister.js';
+import './components/auth/playerLogin.js';
 import './components/auth/adminLogin.js';
 import './components/deck/deckSelector.js';
 import './components/battle/battle.js';

@@ -23,3 +23,21 @@ export function validateNickname(nickname) {
 
     return { valid: true, value: trimmed };
 }
+
+export function validatePassword(password) {
+    const value = password || '';
+
+    if (!value) {
+        return { valid: false, message: 'La contraseña no puede estar vacía.' };
+    }
+
+    if (value.length < 4) {
+        return { valid: false, message: 'La contraseña debe tener al menos 4 caracteres.' };
+    }
+
+    if (value.length > 30) {
+        return { valid: false, message: 'La contraseña no puede superar los 30 caracteres.' };
+    }
+
+    return { valid: true, value };
+}

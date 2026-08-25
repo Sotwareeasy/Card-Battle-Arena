@@ -8,10 +8,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "cp -n src/data/db.example.json src/data/db.json; json-server --watch src/data/db.json --port 3000"
+    "server": "cp -n src/data/db.example.json src/data/db.json; json-server --watch src/data/db.json --port 3000",
+    "start:api": "sh -c 'test -f \"${DB_PATH:-src/data/db.json}\" || cp src/data/db.example.json \"${DB_PATH:-src/data/db.json}\"; json-server --watch \"${DB_PATH:-src/data/db.json}\" --host 0.0.0.0 --port $PORT'",
+    "start:web": "serve dist -p $PORT -s"
   },
   "devDependencies": {
     "vite": "^5.4.0",
-    "json-server": "^0.17.4"
+    "json-server": "^0.17.4",
+    "serve": "^14.2.3"
   }
 }

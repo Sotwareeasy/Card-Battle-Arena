@@ -13,6 +13,14 @@ export async function getPlayerByNickname(nickname) {
     return players.length > 0 ? players[0] : null;
 }
 
+// Usado para el login de un jugador existente
+export async function validatePlayerCredentials(nickname, password) {
+    const players = await apiRequest(
+        `/players?nickname=${encodeURIComponent(nickname)}&password=${encodeURIComponent(password)}`
+    );
+    return players.length > 0 ? players[0] : null;
+}
+
 export async function postPlayer(player) {
     return apiRequest('/players', {
         method: 'POST',

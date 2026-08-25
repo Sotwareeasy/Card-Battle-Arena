@@ -115,10 +115,15 @@ body::before {
     font-style: italic;
 }
 
-.game-header-admin-link {
+.game-header-actions {
     position: absolute;
     top: 1.8rem;
     right: 1.5rem;
+    display: flex;
+    gap: 0.6rem;
+}
+
+.game-header-admin-link {
     background: transparent;
     border: 1px solid rgba(212,175,55,0.4);
     color: #a89060;
@@ -129,6 +134,7 @@ body::before {
     font-family: 'Cinzel', serif;
     letter-spacing: 1px;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .game-header-admin-link:hover {
@@ -201,9 +207,9 @@ body::before {
 
 /* Responsive */
 @media (max-width: 480px) {
-    .game-header-admin-link {
+    .game-header-actions {
         position: static;
-        display: inline-block;
+        justify-content: center;
         margin-top: 0.8rem;
     }
 }
