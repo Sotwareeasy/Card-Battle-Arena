@@ -4,6 +4,7 @@
 
 import { patchPlayer } from '../../api/playersApi.js';
 import { postBattle } from '../../api/battlesApi.js';
+import { startAmbientMusic } from '../../utils/ambientMusic.js';
 
 const SCREEN = {
     REGISTER: 'register',
@@ -20,7 +21,7 @@ const POINTS_ON_WIN = 50;
 const POINTS_ON_LOSS = 10;
 
 class GameApp extends HTMLElement {
-    constructor() {
+        constructor() {
         super();
         this.currentPlayer = null;
         this.currentScreen = SCREEN.REGISTER;
@@ -38,6 +39,7 @@ class GameApp extends HTMLElement {
 
         this.render();
         this.configurarEventos();
+        document.addEventListener('click', () => startAmbientMusic(), { once: true });
     }
 
     render() {

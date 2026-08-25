@@ -3,6 +3,7 @@
 // Al confirmar, arma también el mazo de la máquina y emite el evento 'deck-selected'.
 
 import { getCards } from '../../api/cardsApi.js';
+import { play } from '../../utils/soundManager.js';
 import { pickRandomCards } from '../../utils/random.js';
 import './injectDeckStyles.js';
 
@@ -144,6 +145,7 @@ class DeckSelector extends HTMLElement {
             const card = this.allCards.find((c) => c.id === cardId);
             this.selectedCards.push(card);
         }
+        play('card-select');
 
         this.render();
         this.configurarEventos();

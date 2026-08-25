@@ -7,6 +7,7 @@
 // de insertar el elemento en el DOM.
 
 import * as engine from '../../utils/battleEngine.js';
+import { play } from '../../utils/soundManager.js';
 import { decideMachineAction } from '../../utils/machineAI.js';
 import './battleCard.js';
 import './battleControls.js';
@@ -238,12 +239,12 @@ performMachineTurn() {
 
     playSound(src) {
         if (!src) return;
-        const audio = new Audio(src);
-        audio.volume = 0.6;
-        audio.play().catch(() => {
-            // Los archivos de audio se agregan en la Etapa 24; hasta entonces
-            // el fallo de reproducción se ignora para no interrumpir la partida.
-        });
+        if (src.includes('attack')) play('attack');
+        else if (src.includes('defense')) play('defense');
+        else if (src.includes('special')) play('special');
+        else if (src.includes('defeated')) play('defeated');
+        else if (src.includes('victory')) play('victory');
+        else if (src.includes('defeat')) play('defeat');
     }
 }
 
