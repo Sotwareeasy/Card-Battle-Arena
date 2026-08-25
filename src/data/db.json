@@ -119,10 +119,10 @@
       "id": "player-1787619338029",
       "nickname": "NicoF",
       "password": "2707",
-      "points": 0,
+      "points": 10,
       "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
+      "losses": 1,
+      "gamesPlayed": 1,
       "createdAt": "2026-08-25T00:55:38.029Z"
     }
   ],
@@ -1364,6 +1364,29 @@
       ],
       "startedAt": "2026-08-25T00:46:32.894Z",
       "endedAt": "2026-08-25T00:46:38.671Z"
+    },
+    {
+      "id": "battle-1787619879209",
+      "playerId": "player-1787619338029",
+      "playerNickname": "NicoF",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-020",
+        "card-019",
+        "card-008",
+        "card-007",
+        "card-011"
+      ],
+      "startedAt": "2026-08-25T01:04:33.026Z",
+      "endedAt": "2026-08-25T01:04:39.203Z"
     }
   ]
 }
