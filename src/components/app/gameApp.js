@@ -72,7 +72,7 @@ class GameApp extends HTMLElement {
                 ${this.currentPlayer ? `<p class="game-header-player">Jugador: ${this.currentPlayer.nickname}</p>` : ''}
                 ${this.currentAdmin ? `<p class="game-header-player">Admin: ${this.currentAdmin.username}</p>` : ''}
                 <div class="game-header-actions">
-                    ${(this.currentPlayer || this.currentAdmin) ? `<button type="button" class="game-header-admin-link" data-action="go-home">🏠 Inicio</button>` : ''}
+                    ${(this.currentScreen !== SCREEN.REGISTER && this.currentScreen !== SCREEN.LOGIN) ? `<button type="button" class="game-header-admin-link" data-action="go-home">🏠 Inicio</button>` : ''}
                     ${(this.currentPlayer || this.currentAdmin) ? `<button type="button" class="game-header-admin-link" data-action="logout"> Cerrar sesión</button>` : ''}
                     <button type="button" class="game-header-admin-link" data-action="go-admin">⚙ Admin</button>
                 </div>
@@ -208,6 +208,7 @@ class GameApp extends HTMLElement {
                 this.render();
             }
             if (event.target.dataset.action === 'go-home') {
+                this.currentAdmin = null;
                 this.currentScreen = this.currentPlayer ? SCREEN.DECK_SELECTION : SCREEN.LOGIN;
                 this.render();
             }
