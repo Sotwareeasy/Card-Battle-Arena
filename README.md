@@ -274,7 +274,7 @@ factor aleatorio de daño → ¿esquiva? → ¿crítico? → reducción por defe
 <br />
 
 ## 👤 Autor
-
+Autor del proyecto: 👨‍💻 **Nicolás Fandiño** (MrFDV02) y 🧙‍♂️ **Fabián Uribe** (Sotwareeasy).
 
 <div align="center">
 
