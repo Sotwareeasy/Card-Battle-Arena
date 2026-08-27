@@ -21,7 +21,7 @@
 
 <br />
 
-<img src="public/hogwarts-bg.png" width="100%" alt="Hogwarts Arena banner" />
+<img src="public/repoinfo.png" width="100%" alt="Hogwarts Arena banner" />
 
 </div>
 
