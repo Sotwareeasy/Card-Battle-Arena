@@ -197,7 +197,9 @@ npm run server
 npm run dev
 ```
 
-La API queda disponible en `http://localhost:3000` y el frontend en la URL que indique Vite (por defecto `http://localhost:5173`).
+La API queda disponible en `http://localhost:3000` y el frontend en `http://localhost:5173`.
+
+> 🌐 **Producción:** Frontend en [bubbly-kindness-production-9147.up.railway.app](https://bubbly-kindness-production-9147.up.railway.app/) · API en [card-battle-arena-production-00d2.up.railway.app](https://card-battle-arena-production-00d2.up.railway.app)
 
 <br />
 
