@@ -28,17 +28,16 @@ body::after {
     width: 100%;
     height: 100%;
     background: url('/hogwarts-bg.png') no-repeat center center;
-    background-size: 100% 100%;
-    opacity: 0.20;
+    background-size: cover; /* respeta la proporción real de la imagen; recorta en vez de deformar */
     pointer-events: none;
     z-index: 0;
     animation: castleFloat 8s ease-in-out infinite alternate;
 }
 
 @keyframes castleFloat {
-    0% { transform: translateY(0px); opacity: 0.06; }
-    50% { transform: translateY(-8px); opacity: 0.10; }
-    100% { transform: translateY(0px); opacity: 0.06; }
+    0% { transform: translateY(0px); opacity: 0.07; }
+    50% { transform: translateY(-8px); opacity: 0.13; }
+    100% { transform: translateY(0px); opacity: 0.07; }
 }
 
 /* Partículas mágicas de fondo */
@@ -130,7 +129,7 @@ body::before {
     border-radius: 6px;
     padding: 0.4rem 0.8rem;
     font-size: 0.75rem;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     font-family: 'Cinzel', serif;
     letter-spacing: 1px;
     transition: all 0.2s ease;

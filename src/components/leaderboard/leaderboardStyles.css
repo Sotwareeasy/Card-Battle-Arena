@@ -201,7 +201,7 @@
     font-size: 0.85rem;
     letter-spacing: 1px;
     text-transform: uppercase;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     transition: all 0.2s ease;
     border: 1px solid #d4af37;
     background: transparent;
@@ -244,7 +244,7 @@
     border-radius: 25px;
     font-family: 'Cinzel', serif;
     font-size: 0.9rem;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     width: auto;
     max-width: 200px;
     box-shadow: 0 0 8px rgba(74, 127, 201, 0.3);

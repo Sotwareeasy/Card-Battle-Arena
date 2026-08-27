@@ -48,7 +48,7 @@
     border-radius: 8px;
     padding: 0.5rem;
     color: #f5f0e6;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,7 +133,7 @@
     border-radius: 4px;
     width: 24px;
     height: 24px;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     font-size: 0.7rem;
 }
 
@@ -149,7 +149,7 @@
     background: #d4af37;
     color: #1a1a2e;
     font-weight: bold;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     font-size: 1rem;
 }
 
@@ -186,7 +186,7 @@
     border-radius: 8px;
     background: rgba(26, 10, 46, 0.6);
     color: #f5f0e6;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     font-size: 0.85rem;
     transition: all 0.2s ease;
 }

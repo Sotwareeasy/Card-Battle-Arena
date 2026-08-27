@@ -182,7 +182,7 @@
     border-radius: 8px;
     background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(13, 13, 26, 0.9) 100%);
     color: #f5f0e6;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     font-size: 0.8rem;
     font-family: 'Cinzel', serif;
     letter-spacing: 0.5px;
@@ -253,7 +253,7 @@
     font-size: 0.75rem;
     padding: 0.5rem 1.2rem;
     border-radius: 20px;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     transition: all 0.2s ease;
 }
 
@@ -530,7 +530,7 @@
     font-size: 0.85rem;
     padding: 10px 24px;
     border-radius: 6px;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     transition: all 0.2s ease;
     box-shadow: 0 0 8px rgba(176, 58, 58, 0.3);
 }
@@ -556,7 +556,7 @@
     border-radius: 20px;
     font-family: 'Cinzel', serif;
     font-size: 0.8rem;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     transition: all 0.2s;
 }
 .battle-surrender-btn:hover {
