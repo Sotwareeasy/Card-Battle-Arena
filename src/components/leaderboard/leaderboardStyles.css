@@ -235,22 +235,26 @@
 }
 
 .leaderboard-play-again-btn {
-    background: rgba(30, 10, 45, 0.85);
-    border: 1px solid #4a7fc9;
-    color: #e8c86e;
-    font-family: 'Cinzel', 'Georgia', serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 0.85rem;
-    padding: 10px 24px;
-    border-radius: 6px;
+    display: block;
+    margin: 1.2rem auto 0;
+    padding: 0.5rem 1.8rem;
+    background: transparent;
+    border: 2px solid #b8860b;
+    color: #d4af37;
+    border-radius: 25px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    width: auto;
+    max-width: 200px;
     box-shadow: 0 0 8px rgba(74, 127, 201, 0.3);
+    transition: all 0.2s ease;
 }
 
 .leaderboard-play-again-btn:hover {
-    background: rgba(74, 127, 201, 0.25);
+    background: #b8860b;
+    color: #1a1040;
+    font-weight: bold;
     box-shadow: 0 0 14px rgba(74, 127, 201, 0.6);
     transform: translateY(-1px);
 }
@@ -258,25 +262,4 @@
 .leaderboard-play-again-btn:active {
     transform: translateY(0);
     box-shadow: 0 0 6px rgba(74, 127, 201, 0.4);
-}
-
-
-.leaderboard-play-again-btn {
-    display: block !important;
-    margin: 1.2rem auto 0 !important;
-    padding: 0.5rem 1.8rem !important;
-    background: transparent !important;
-    border: 2px solid #b8860b !important;
-    color: #d4af37 !important;
-    border-radius: 25px !important;
-    font-family: 'Cinzel', serif !important;
-    font-size: 0.9rem !important;
-    cursor: pointer !important;
-    width: auto !important;
-    max-width: 200px !important;
-}
-.leaderboard-play-again-btn:hover {
-    background: #b8860b !important;
-    color: #1a1040 !important;
-    font-weight: bold !important;
 }

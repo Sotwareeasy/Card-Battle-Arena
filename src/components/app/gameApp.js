@@ -48,19 +48,27 @@ class GameApp extends HTMLElement {
         document.addEventListener('click', () => startAmbientMusic(), { once: true });
     }
 
-    // Lee la sesión guardada (si existe) y ajusta el estado inicial ANTES
+    // Lee las sesiones guardadas (si existen) y ajusta el estado inicial ANTES
     // del primer render, para que el refresco de página no vuelva siempre
-    // a la pantalla de registro.
+    // a la pantalla de registro. Jugador y admin se restauran de forma
+    // INDEPENDIENTE: cerrar una no afecta a la otra.
     restoreSession() {
-        const session = loadSession();
-        if (!session || !session.data) return;
+        const playerData = loadSession('player');
+        const adminData = loadSession('admin');
 
-        if (session.type === 'player') {
-            this.currentPlayer = session.data;
+        if (playerData) {
+            this.currentPlayer = playerData;
             this.currentScreen = SCREEN.DECK_SELECTION;
-        } else if (session.type === 'admin') {
-            this.currentAdmin = session.data;
-            this.currentScreen = SCREEN.ADMIN_PANEL;
+        }
+
+        if (adminData) {
+            this.currentAdmin = adminData;
+            // Si no había jugador, la pantalla inicial es el panel admin.
+            // Si sí había jugador, se prioriza su pantalla (el admin queda
+            // disponible igual vía el botón "⚙ Admin" del header).
+            if (!playerData) {
+                this.currentScreen = SCREEN.ADMIN_PANEL;
+            }
         }
     }
 
