@@ -638,3 +638,24 @@
     margin-top: 0.3rem;
     letter-spacing: 1px;
 }
+
+/* Marcador de cartas derrotadas */
+.battle-scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem auto;
+    font-family: 'Cinzel', serif;
+}
+.battle-score {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #d4af37;
+    transition: color 0.3s;
+}
+.battle-score-vs {
+    font-size: 0.75rem;
+    color: #888;
+    letter-spacing: 1px;
+}

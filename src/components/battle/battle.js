@@ -67,9 +67,10 @@ class BattleArena extends HTMLElement {
                         ${this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual'}
                     </button>
                 </div>
-                <div class="battle-advantage-bar">
-                    <div class="battle-advantage-fill" id="advantage-fill"></div>
-                    <span class="battle-advantage-label" id="advantage-label"></span>
+                <div class="battle-scoreboard">
+                    <span class="battle-score battle-score--player" id="score-player">🧙 0</span>
+                    <span class="battle-score-vs">cartas derrotadas</span>
+                    <span class="battle-score battle-score--machine" id="score-machine">0 🤖</span>
                 </div>
                 <div class="battle-field">
                     <battle-card class="battle-side battle-side--player"></battle-card>
@@ -408,32 +409,26 @@ class BattleArena extends HTMLElement {
         });
     }
 
-    updateAdvantageBar() {
-        const fill = this.querySelector('#advantage-fill');
-        const label = this.querySelector('#advantage-label');
-        if (!fill || !label) return;
+    updateScoreboard() {
+        const scorePlayer = this.querySelector('#score-player');
+        const scoreMachine = this.querySelector('#score-machine');
+        if (!scorePlayer || !scoreMachine) return;
 
-        const playerHp = this.state.player.deck.reduce((sum, c) => sum + c.currentHp, 0);
-        const machineHp = this.state.machine.deck.reduce((sum, c) => sum + c.currentHp, 0);
-        const total = playerHp + machineHp;
-        if (total === 0) return;
+        const playerDefeated = this.state.machine.deck.filter(c => c.currentHp === 0).length;
+        const machineDefeated = this.state.player.deck.filter(c => c.currentHp === 0).length;
 
-        const playerPct = Math.round((playerHp / total) * 100);
+        scorePlayer.textContent = `🧙 ${playerDefeated}`;
+        scoreMachine.textContent = `${machineDefeated} 🤖`;
 
-        fill.style.width = playerPct + '%';
-
-        if (playerPct > 55) {
-            fill.style.background = 'linear-gradient(90deg, #00cc66, #00ff88)';
-            label.textContent = '🧙 Jugador lleva ventaja';
-            label.style.color = '#00ff88';
-        } else if (playerPct < 45) {
-            fill.style.background = 'linear-gradient(90deg, #cc0000, #ff4444)';
-            label.textContent = '🤖 Máquina lleva ventaja';
-            label.style.color = '#ff4444';
+        if (playerDefeated > machineDefeated) {
+            scorePlayer.style.color = '#00ff88';
+            scoreMachine.style.color = '#ff4444';
+        } else if (machineDefeated > playerDefeated) {
+            scorePlayer.style.color = '#ff4444';
+            scoreMachine.style.color = '#00ff88';
         } else {
-            fill.style.background = 'linear-gradient(90deg, #b8860b, #d4af37)';
-            label.textContent = '⚔️ Batalla igualada';
-            label.style.color = '#d4af37';
+            scorePlayer.style.color = '#d4af37';
+            scoreMachine.style.color = '#d4af37';
         }
     }
 
@@ -473,7 +468,7 @@ class BattleArena extends HTMLElement {
             );
         }
 
-        this.updateAdvantageBar();
+        this.updateScoreboard();
     }
 
     handleBattleEnd() {
