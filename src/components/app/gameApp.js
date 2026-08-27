@@ -5,6 +5,7 @@
 import { patchPlayer } from '../../api/playersApi.js';
 import { postBattle } from '../../api/battlesApi.js';
 import { startAmbientMusic } from '../../utils/ambientMusic.js';
+import { saveSession, loadSession, clearSession } from '../../utils/session.js';
 
 const SCREEN = {
     REGISTER: 'register',
@@ -37,9 +38,30 @@ class GameApp extends HTMLElement {
         this.isSavingResults = false;
         this.saveError = '';
 
+        // Si había una sesión guardada de un refresco anterior, se restaura
+        // aquí (jugador -> selección de mazo, admin -> panel administrativo).
+        // La batalla en curso NO se restaura: solo la sesión de login.
+        this.restoreSession();
+
         this.render();
         this.configurarEventos();
         document.addEventListener('click', () => startAmbientMusic(), { once: true });
+    }
+
+    // Lee la sesión guardada (si existe) y ajusta el estado inicial ANTES
+    // del primer render, para que el refresco de página no vuelva siempre
+    // a la pantalla de registro.
+    restoreSession() {
+        const session = loadSession();
+        if (!session || !session.data) return;
+
+        if (session.type === 'player') {
+            this.currentPlayer = session.data;
+            this.currentScreen = SCREEN.DECK_SELECTION;
+        } else if (session.type === 'admin') {
+            this.currentAdmin = session.data;
+            this.currentScreen = SCREEN.ADMIN_PANEL;
+        }
     }
 
     render() {
@@ -50,7 +72,7 @@ class GameApp extends HTMLElement {
                 ${this.currentPlayer ? `<p class="game-header-player">Jugador: ${this.currentPlayer.nickname}</p>` : ''}
                 ${this.currentAdmin ? `<p class="game-header-player">Admin: ${this.currentAdmin.username}</p>` : ''}
                 <div class="game-header-actions">
-                    ${this.currentPlayer ? `<button type="button" class="game-header-admin-link" data-action="logout">🚪 Cerrar sesión</button>` : ''}
+                    ${(this.currentPlayer || this.currentAdmin) ? `<button type="button" class="game-header-admin-link" data-action="logout">🚪 Cerrar sesión</button>` : ''}
                     <button type="button" class="game-header-admin-link" data-action="go-admin">⚙ Admin</button>
                 </div>
             </header>
@@ -139,12 +161,14 @@ class GameApp extends HTMLElement {
     configurarEventos() {
         this.addEventListener('player-registered', (event) => {
             this.currentPlayer = event.detail.player;
+            saveSession('player', this.currentPlayer);
             this.currentScreen = SCREEN.DECK_SELECTION;
             this.render();
         });
 
         this.addEventListener('player-logged-in', (event) => {
             this.currentPlayer = event.detail.player;
+            saveSession('player', this.currentPlayer);
             this.currentScreen = SCREEN.DECK_SELECTION;
             this.render();
         });
@@ -181,9 +205,11 @@ class GameApp extends HTMLElement {
             }
             if (event.target.dataset.action === 'logout') {
                 this.currentPlayer = null;
+                this.currentAdmin = null;
                 this.playerDeck = null;
                 this.machineDeck = null;
                 this.lastResult = null;
+                clearSession();
                 this.currentScreen = SCREEN.LOGIN;
                 this.render();
             }
@@ -191,6 +217,7 @@ class GameApp extends HTMLElement {
 
         this.addEventListener('admin-logged-in', (event) => {
             this.currentAdmin = event.detail.admin;
+            saveSession('admin', this.currentAdmin);
             this.currentScreen = SCREEN.ADMIN_PANEL;
             this.render();
         });
@@ -229,6 +256,7 @@ class GameApp extends HTMLElement {
         try {
             await patchPlayer(updatedStats, this.currentPlayer.id);
             this.currentPlayer = { ...this.currentPlayer, ...updatedStats };
+            saveSession('player', this.currentPlayer);
 
             await postBattle(battleRecord);
 
