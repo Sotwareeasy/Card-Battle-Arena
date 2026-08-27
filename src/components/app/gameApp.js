@@ -72,7 +72,8 @@ class GameApp extends HTMLElement {
                 ${this.currentPlayer ? `<p class="game-header-player">Jugador: ${this.currentPlayer.nickname}</p>` : ''}
                 ${this.currentAdmin ? `<p class="game-header-player">Admin: ${this.currentAdmin.username}</p>` : ''}
                 <div class="game-header-actions">
-                    ${(this.currentPlayer || this.currentAdmin) ? `<button type="button" class="game-header-admin-link" data-action="logout">🚪 Cerrar sesión</button>` : ''}
+                    ${(this.currentPlayer || this.currentAdmin) ? `<button type="button" class="game-header-admin-link" data-action="go-home">🏠 Inicio</button>` : ''}
+                    ${(this.currentPlayer || this.currentAdmin) ? `<button type="button" class="game-header-admin-link" data-action="logout"> Cerrar sesión</button>` : ''}
                     <button type="button" class="game-header-admin-link" data-action="go-admin">⚙ Admin</button>
                 </div>
             </header>
@@ -135,7 +136,7 @@ class GameApp extends HTMLElement {
         const isWin = this.lastResult === 'win';
         const isAbandoned = this.lastResult === 'abandoned';
 
-        const title = isAbandoned ? '🏳️ Batalla abandonada' : (isWin ? '🏆 ¡Victoria!' : '💀 Derrota');
+        const title = isAbandoned ? '️ Batalla abandonada' : (isWin ? ' ¡Victoria!' : ' Derrota');
 
         return `
             <section class="auth-card">
@@ -204,6 +205,10 @@ class GameApp extends HTMLElement {
             }
             if (event.target.dataset.action === 'go-admin') {
                 this.currentScreen = this.currentAdmin ? SCREEN.ADMIN_PANEL : SCREEN.ADMIN_LOGIN;
+                this.render();
+            }
+            if (event.target.dataset.action === 'go-home') {
+                this.currentScreen = this.currentPlayer ? SCREEN.DECK_SELECTION : SCREEN.LOGIN;
                 this.render();
             }
             if (event.target.dataset.action === 'logout') {
