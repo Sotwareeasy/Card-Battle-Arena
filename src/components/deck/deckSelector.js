@@ -23,6 +23,7 @@ class DeckSelector extends HTMLElement {
         this.errorMessage = '';
         this.allCards = [];
         this.selectedCards = []; // orden = orden de batalla
+        this.battleMode = 'manual'; // 'manual' | 'automatic' — también se puede cambiar durante la batalla
     }
 
     connectedCallback() {
@@ -72,6 +73,19 @@ class DeckSelector extends HTMLElement {
                 </div>
 
                 ${this.selectedCards.length > 0 ? this.renderOrderPanel() : ''}
+
+                <div class="deck-mode-selector">
+                    <h3 class="deck-mode-title">Modo de batalla</h3>
+                    <div class="deck-mode-options">
+                        <button type="button" class="deck-mode-btn ${this.battleMode === 'manual' ? 'deck-mode-btn--active' : ''}" data-mode="manual">
+                            🎮 Manual
+                        </button>
+                        <button type="button" class="deck-mode-btn ${this.battleMode === 'automatic' ? 'deck-mode-btn--active' : ''}" data-mode="automatic">
+                            🤖 Automático
+                        </button>
+                    </div>
+                    <p class="deck-mode-hint">Podrás cambiar de modo en cualquier momento durante la batalla.</p>
+                </div>
 
                 <button
                     class="deck-confirm-button"
@@ -129,6 +143,14 @@ class DeckSelector extends HTMLElement {
             btn.addEventListener('click', () => this.moveCard(btn.dataset.cardId, btn.dataset.move));
         });
 
+        this.querySelectorAll('.deck-mode-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                this.battleMode = btn.dataset.mode;
+                this.render();
+                this.configurarEventos();
+            });
+        });
+
         const confirmButton = this.querySelector('.deck-confirm-button');
         if (confirmButton) {
             confirmButton.addEventListener('click', () => this.confirmDeck());
@@ -173,7 +195,8 @@ class DeckSelector extends HTMLElement {
         this.dispatchEvent(new CustomEvent('deck-selected', {
             detail: {
                 playerDeck: this.selectedCards,
-                machineDeck
+                machineDeck,
+                mode: this.battleMode
             },
             bubbles: true
         }));

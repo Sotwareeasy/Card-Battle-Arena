@@ -16,6 +16,8 @@ function play(type) {
     case 'victory':      playVictory();     break;
     case 'defeat':       playDefeat();      break;
     case 'card-select':  playCardSelect();  break;
+    case 'critical':     playCritical();    break;
+    case 'dodge':        playDodge();       break;
   }
 }
 
@@ -113,4 +115,30 @@ function playCardSelect() {
   gain.gain.setValueAtTime(0.2, ctx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
   osc.start(); osc.stop(ctx.currentTime + 0.15);
+}
+
+// Golpe crítico: un timbre agudo y brillante, distinto del ataque normal.
+function playCritical() {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(900, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.12);
+  gain.gain.setValueAtTime(0.35, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+  osc.start(); osc.stop(ctx.currentTime + 0.25);
+}
+
+// Esquive: un "whoosh" corto y descendente, claramente distinto del daño.
+function playDodge() {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(700, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.18);
+  gain.gain.setValueAtTime(0.25, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+  osc.start(); osc.stop(ctx.currentTime + 0.2);
 }

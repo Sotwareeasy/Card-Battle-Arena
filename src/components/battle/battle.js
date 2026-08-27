@@ -8,12 +8,13 @@
 
 import * as engine from '../../utils/battleEngine.js';
 import { play } from '../../utils/soundManager.js';
-import { decideMachineAction } from '../../utils/machineAI.js';
+import { decideAutoAction } from '../../utils/machineAI.js';
 import './battleCard.js';
 import './battleControls.js';
 import './injectBattleStyles.js';
 
 const MACHINE_TURN_DELAY_MS = 1200;
+const AUTO_PLAYER_TURN_DELAY_MS = 1200; // misma pausa visible que el turno de la máquina
 const DEFEAT_TRANSITION_MS = 900;
 
 class BattleArena extends HTMLElement {
@@ -24,6 +25,11 @@ class BattleArena extends HTMLElement {
         this.state = null;
         this.previousLogLength = 0;
         this.startedAt = null;
+        // 'manual' (default) o 'automatic'. gameApp.js puede fijar esta
+        // propiedad ANTES de insertar el elemento en el DOM.
+        this.mode = 'manual';
+        this.pendingTimeoutId = null; // permite cancelar el turno automático pendiente
+        this.turnInProgress = false;  // evita doble acción / cambios de modo a mitad de turno
     }
 
     connectedCallback() {
@@ -35,6 +41,21 @@ class BattleArena extends HTMLElement {
 
         if (this.state.turn === 'machine') {
             this.scheduleMachineTurn();
+        } else if (this.mode === 'automatic') {
+            this.scheduleAutoPlayerTurn();
+        }
+    }
+
+    // Se detienen los temporizadores pendientes si el componente se desmonta
+    // (ej. el jugador navega fuera de la pantalla de batalla).
+    disconnectedCallback() {
+        this.clearPendingTimeout();
+    }
+
+    clearPendingTimeout() {
+        if (this.pendingTimeoutId) {
+            clearTimeout(this.pendingTimeoutId);
+            this.pendingTimeoutId = null;
         }
     }
 
@@ -42,6 +63,11 @@ class BattleArena extends HTMLElement {
         this.innerHTML = `
             <section class="battle-arena">
                 <p class="battle-turn-indicator"></p>
+                <div class="battle-mode-bar">
+                    <button type="button" class="battle-mode-btn" data-action="toggle-mode">
+                        ${this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual'}
+                    </button>
+                </div>
                 <div class="battle-field">
                     <battle-card class="battle-side battle-side--player"></battle-card>
                     <span class="battle-vs">VS</span>
@@ -55,29 +81,55 @@ class BattleArena extends HTMLElement {
 
     configurarEventos() {
         this.addEventListener('action-attack', (event) => {
-            if (!this.isPlayerTurn()) return;
+            if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performAttack(this.state, 'player', event.detail.attackId);
             this.handleStateChange();
         });
 
         this.addEventListener('action-defense', () => {
-            if (!this.isPlayerTurn()) return;
+            if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performDefense(this.state, 'player');
             this.handleStateChange();
         });
 
                 this.addEventListener('action-special', () => {
-            if (!this.isPlayerTurn()) return;
+            if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performSpecial(this.state, 'player');
             this.handleStateChange();
         });
 
         this.addEventListener('click', (e) => {
+            if (e.target.closest('.battle-mode-btn')) {
+                this.toggleMode();
+                return;
+            }
+
             if (!e.target.classList.contains('battle-surrender-btn')) return;
             if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
+            this.clearPendingTimeout();
             this.state.status = engine.BATTLE_STATUS.MACHINE_WON;
             this.handleBattleEnd();
         });
+    }
+
+    // Cambia entre modo manual y automático desde el control de la propia
+    // pantalla de batalla (requisito: control claramente identificado).
+    toggleMode() {
+        if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
+        if (this.turnInProgress) return; // no se puede cambiar de modo con una acción automática ya en curso
+
+        this.mode = this.mode === 'automatic' ? 'manual' : 'automatic';
+
+        const modeBtn = this.querySelector('.battle-mode-btn');
+        if (modeBtn) {
+            modeBtn.textContent = this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual';
+        }
+
+        this.syncUI();
+
+        if (this.mode === 'automatic' && this.isPlayerTurn()) {
+            this.scheduleAutoPlayerTurn();
+        }
     }
 
     isPlayerTurn() {
@@ -119,7 +171,10 @@ class BattleArena extends HTMLElement {
             this.playSound(defeatedSideEl.cardData.sounds?.defeated);
         }
 
-        setTimeout(() => {
+        this.turnInProgress = true;
+        this.pendingTimeoutId = setTimeout(() => {
+            this.pendingTimeoutId = null;
+            this.turnInProgress = false;
             this.syncUI();
             const enteredEntry = newEntries.find((entry) => entry.type === 'card-entered');
             if (enteredEntry) {
@@ -137,10 +192,12 @@ class BattleArena extends HTMLElement {
         }
         if (this.state.turn === 'machine') {
             this.scheduleMachineTurn();
+        } else if (this.mode === 'automatic') {
+            this.scheduleAutoPlayerTurn();
         }
     }
 
-    // --- Turno de la máquina (placeholder temporal, se reemplaza en Etapa 8) ---
+    // --- Turno de la máquina ---
 
     scheduleMachineTurn() {
         const controls = this.querySelector('battle-controls');
@@ -148,21 +205,61 @@ class BattleArena extends HTMLElement {
             controls.setControls(
                 engine.getActiveCard(this.state, 'machine'),
                 { attackIds: [], canDefend: false, canUseSpecial: false },
-                false
+                false,
+                '🤖 Turno de la máquina...'
             );
         }
-        setTimeout(() => this.performMachineTurn(), MACHINE_TURN_DELAY_MS);
+        this.turnInProgress = true;
+        this.pendingTimeoutId = setTimeout(() => this.performMachineTurn(), MACHINE_TURN_DELAY_MS);
     }
 
-performMachineTurn() {
+    performMachineTurn() {
+        this.pendingTimeoutId = null;
+        this.turnInProgress = false;
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
-        const decision = decideMachineAction(this.state, 'machine');
+
+        const decision = decideAutoAction(this.state, 'machine');
         if (decision.type === 'attack') {
             engine.performAttack(this.state, 'machine', decision.attackId);
         } else if (decision.type === 'defense') {
             engine.performDefense(this.state, 'machine');
         } else if (decision.type === 'special') {
             engine.performSpecial(this.state, 'machine');
+        }
+        this.handleStateChange();
+    }
+
+    // --- Modo automático del jugador ---
+    // Usa la misma estrategia programada (machineAI.js) que la máquina,
+    // aplicada ahora al lado 'player'. Se ejecuta con una pausa visible
+    // (setTimeout) para que el flujo se pueda seguir con claridad.
+
+    scheduleAutoPlayerTurn() {
+        const controls = this.querySelector('battle-controls');
+        if (controls) {
+            controls.setControls(
+                engine.getActiveCard(this.state, 'player'),
+                { attackIds: [], canDefend: false, canUseSpecial: false },
+                false,
+                '🤖 Acción automática en curso...'
+            );
+        }
+        this.turnInProgress = true;
+        this.pendingTimeoutId = setTimeout(() => this.performAutoPlayerTurn(), AUTO_PLAYER_TURN_DELAY_MS);
+    }
+
+    performAutoPlayerTurn() {
+        this.pendingTimeoutId = null;
+        this.turnInProgress = false;
+        if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS || this.state.turn !== 'player') return;
+
+        const decision = decideAutoAction(this.state, 'player');
+        if (decision.type === 'attack') {
+            engine.performAttack(this.state, 'player', decision.attackId);
+        } else if (decision.type === 'defense') {
+            engine.performDefense(this.state, 'player');
+        } else if (decision.type === 'special') {
+            engine.performSpecial(this.state, 'player');
         }
         this.handleStateChange();
     }
@@ -177,10 +274,20 @@ performMachineTurn() {
                 const opponentSide = entry.side === 'player' ? 'machine' : 'player';
                 const opponentEl = this.querySelector(`.battle-side--${opponentSide}`);
                 if (sideEl) sideEl.triggerAnimation('battle-anim-attack');
-                if (opponentEl) opponentEl.triggerAnimation('battle-anim-damage');
 
                 const attackerCard = engine.getActiveCard(this.state, entry.side);
                 this.playSound(attackerCard.sounds?.[entry.type === 'special' ? 'special' : 'attack']);
+
+                if (entry.dodged) {
+                    if (opponentEl) opponentEl.showFeedback('¡ATAQUE ESQUIVADO!', 'dodge');
+                    play('dodge');
+                } else {
+                    if (opponentEl) opponentEl.triggerAnimation('battle-anim-damage');
+                    if (entry.critical) {
+                        if (opponentEl) opponentEl.showFeedback('¡GOLPE CRÍTICO!', 'critical');
+                        play('critical');
+                    }
+                }
             }
 
             if (entry.type === 'defense') {
@@ -205,15 +312,32 @@ performMachineTurn() {
 
         if (this.isPlayerTurn()) {
             const activeCard = engine.getActiveCard(this.state, 'player');
-            const availableActions = engine.getAvailableActions(this.state, 'player');
-            controlsEl.setControls(activeCard, availableActions, true);
+
+            if (this.mode === 'automatic') {
+                controlsEl.setControls(
+                    activeCard,
+                    { attackIds: [], canDefend: false, canUseSpecial: false },
+                    false,
+                    '🤖 Acción automática en curso...'
+                );
+            } else {
+                const availableActions = engine.getAvailableActions(this.state, 'player');
+                controlsEl.setControls(activeCard, availableActions, true);
+            }
         } else {
             const activeCard = engine.getActiveCard(this.state, 'machine');
-            controlsEl.setControls(activeCard, { attackIds: [], canDefend: false, canUseSpecial: false }, false);
+            controlsEl.setControls(
+                activeCard,
+                { attackIds: [], canDefend: false, canUseSpecial: false },
+                false,
+                '🤖 Turno de la máquina...'
+            );
         }
     }
 
     handleBattleEnd() {
+        this.clearPendingTimeout();
+
         const isPlayerWinner = this.state.status === engine.BATTLE_STATUS.PLAYER_WON;
 
         const resultBanner = document.createElement('div');
@@ -227,6 +351,7 @@ performMachineTurn() {
         this.dispatchEvent(new CustomEvent('battle-ended', {
             detail: {
                 status: this.state.status,
+                mode: this.mode,
                 playerDeckIds: this.playerDeck.map((card) => card.id),
                 machineDeckIds: this.machineDeck.map((card) => card.id),
                 startedAt: this.startedAt,

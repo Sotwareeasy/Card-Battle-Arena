@@ -230,6 +230,34 @@ El volumen persistente es lo que garantiza que los datos (jugadores, puntajes, h
 
 <br />
 
+## 🧪 Nuevas mecánicas (extensión individual — examen)
+
+Extensión desarrollada individualmente sobre la base entregada en equipo, sin migrar de framework ni reescribir la arquitectura existente.
+
+| Mecánica | Regla | Dónde vive |
+|---|---|---|
+| ✨ **Golpe crítico** | 12% de probabilidad · daño ×1.5 | `battleEngine.js` → `resolveDamage()` |
+| 💨 **Esquivar ataque** | 8% de probabilidad · daño final = 0 | `battleEngine.js` → `resolveDamage()` |
+| 🤖 **Modo de batalla automática** | El jugador también es controlado por una estrategia programada; alternable en vivo desde un botón dentro de la propia batalla | `battle.js`, `machineAI.js` (`decideAutoAction`) |
+| 💾 **Persistencia del modo** | Cada partida guarda `{ mode: "manual" \| "automatic" }` en su registro de historial | `gameApp.js` |
+
+**Orden de resolución de daño** (idéntico para ataques normales y para el especial):
+
+```
+factor aleatorio de daño → ¿esquiva? → ¿crítico? → reducción por defensa → redondeo → resta de HP
+```
+
+**Estrategia automática** (`machineAI.js`, función `decideAutoAction`, reutilizada tanto por la máquina como por el jugador en modo automático):
+- Prioriza el poder especial cuando está disponible.
+- Aumenta la probabilidad de defender si la vida baja del 30%.
+- Evita defender más de 2 veces seguidas.
+
+**Control de temporizadores:** todo el modo automático usa `setTimeout` encadenado (nunca `setInterval`), con una bandera `turnInProgress` que evita doble-acción, y limpieza explícita del temporizador pendiente al rendirse, terminar la batalla o desmontar el componente.
+
+**Archivos modificados:** `battleEngine.js`, `machineAI.js`, `soundManager.js`, `battleCard.js`, `battleControls.js`, `battle.js`, `deckSelector.js`, `deckStyles.css`, `battleStyles.css`, `gameApp.js`.
+
+<br />
+
 ## 🗺️ Roadmap
 
 - [x] Registro de jugadores
@@ -239,6 +267,7 @@ El volumen persistente es lo que garantiza que los datos (jugadores, puntajes, h
 - [x] Panel administrativo (CRUD de cartas)
 - [x] Autenticación con contraseña + login/logout de jugadores
 - [x] Persistencia en Railway con volumen
+- [x] Modo de batalla automática + golpe crítico + esquive (examen)
 - [ ] Historial de batallas por jugador
 - [ ] Modo multijugador en tiempo real
 

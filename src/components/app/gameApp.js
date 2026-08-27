@@ -82,6 +82,7 @@ class GameApp extends HTMLElement {
             const battleArena = document.createElement('battle-arena');
             battleArena.playerDeck = this.playerDeck;
             battleArena.machineDeck = this.machineDeck;
+            battleArena.mode = this.battleMode || 'manual';
             screenContainer.appendChild(battleArena);
             return;
         }
@@ -156,6 +157,7 @@ class GameApp extends HTMLElement {
         this.addEventListener('deck-selected', (event) => {
             this.playerDeck = event.detail.playerDeck;
             this.machineDeck = event.detail.machineDeck;
+            this.battleMode = event.detail.mode || 'manual';
             this.currentScreen = SCREEN.BATTLE;
             this.render();
         });
@@ -219,6 +221,7 @@ class GameApp extends HTMLElement {
             pointsAwarded: this.pointsAwarded,
             playerDeck: battleDetail.playerDeckIds,
             machineDeck: battleDetail.machineDeckIds,
+            mode: battleDetail.mode || 'manual',
             startedAt: battleDetail.startedAt,
             endedAt: battleDetail.endedAt
         };

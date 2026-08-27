@@ -12,6 +12,11 @@ export const BATTLE_STATUS = {
     MACHINE_WON: 'machine-won'
 };
 
+// Reglas de eventos probabilísticos (ver README, sección "Nuevas mecánicas")
+export const DODGE_CHANCE = 0.08;
+export const CRITICAL_CHANCE = 0.12;
+export const CRITICAL_MULTIPLIER = 1.5;
+
 // --- Creación del estado inicial ---
 
 function createRuntimeCard(card) {
@@ -20,7 +25,8 @@ function createRuntimeCard(card) {
         currentHp: card.hp,
         isDefending: false,
         specialCooldown: 0,
-        turnsActed: 0 // cuenta los turnos propios que esta carta ha tomado
+        turnsActed: 0, // cuenta los turnos propios que esta carta ha tomado
+        consecutiveDefends: 0 // usado por la IA/estrategia automática para no abusar de defender
     };
 }
 
@@ -53,6 +59,26 @@ function getOpponentSide(side) {
     return side === 'player' ? 'machine' : 'player';
 }
 
+// Implementa el orden de resolución de daño requerido:
+// 1) factor aleatorio de daño -> 2) esquive -> 3) crítico -> 4) reducción por defensa -> 5) redondeo
+function resolveDamage(baseDamage, defender) {
+    const rawDamage = computeRandomDamage(baseDamage);
+
+    const dodged = Math.random() < DODGE_CHANCE;
+    if (dodged) {
+        return { damage: 0, dodged: true, critical: false };
+    }
+
+    const critical = Math.random() < CRITICAL_CHANCE;
+    let damage = critical ? rawDamage * CRITICAL_MULTIPLIER : rawDamage;
+
+    if (defender.isDefending) {
+        damage *= defender.defense.damageReduction;
+    }
+
+    return { damage: Math.round(damage), dodged: false, critical };
+}
+
 // Determina qué acciones puede ejecutar la carta activa de `side` en este momento.
 // Usado por la UI (Etapa 7) y por la IA de la máquina (Etapa 8).
 export function getAvailableActions(state, side) {
@@ -81,18 +107,17 @@ export function performAttack(state, side, attackId) {
     const attack = attacker.attacks.find((a) => a.id === attackId);
     if (!attack) return state;
 
-    let damage = computeRandomDamage(attack.baseDamage);
+    const { damage, dodged, critical } = resolveDamage(attack.baseDamage, defender);
 
-    if (defender.isDefending) {
-        damage = Math.round(damage * defender.defense.damageReduction);
+    if (!dodged) {
+        defender.currentHp = Math.max(0, defender.currentHp - damage);
         defender.isDefending = false;
     }
 
-    defender.currentHp = Math.max(0, defender.currentHp - damage);
-
-    state.log.push({ type: 'attack', side, attackName: attack.name, damage });
+    state.log.push({ type: 'attack', side, attackName: attack.name, damage, dodged, critical });
 
     attacker.turnsActed += 1;
+    attacker.consecutiveDefends = 0;
     decreaseCooldown(attacker);
 
     handleDefeatIfNeeded(state, opponentSide);
@@ -110,6 +135,7 @@ export function performDefense(state, side) {
     state.log.push({ type: 'defense', side, defenseName: card.defense.name });
 
     card.turnsActed += 1;
+    card.consecutiveDefends += 1;
     decreaseCooldown(card);
 
     advanceTurn(state);
@@ -127,18 +153,17 @@ export function performSpecial(state, side) {
     const opponentSide = getOpponentSide(side);
     const defender = getActiveCard(state, opponentSide);
 
-    let damage = computeRandomDamage(attacker.special.baseDamage);
+    const { damage, dodged, critical } = resolveDamage(attacker.special.baseDamage, defender);
 
-    if (defender.isDefending) {
-        damage = Math.round(damage * defender.defense.damageReduction);
+    if (!dodged) {
+        defender.currentHp = Math.max(0, defender.currentHp - damage);
         defender.isDefending = false;
     }
 
-    defender.currentHp = Math.max(0, defender.currentHp - damage);
-
-    state.log.push({ type: 'special', side, specialName: attacker.special.name, damage });
+    state.log.push({ type: 'special', side, specialName: attacker.special.name, damage, dodged, critical });
 
     attacker.turnsActed += 1;
+    attacker.consecutiveDefends = 0;
     attacker.specialCooldown = attacker.special.cooldown;
 
     handleDefeatIfNeeded(state, opponentSide);

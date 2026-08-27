@@ -157,6 +157,57 @@
     opacity: 0.4;
     cursor: not-allowed;
 }
+
+/* Selector de modo de batalla (manual / automático) */
+.deck-mode-selector {
+    margin: 1.2rem auto;
+    max-width: 420px;
+    text-align: center;
+}
+
+.deck-mode-title {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #d4af37;
+    margin-bottom: 0.6rem;
+}
+
+.deck-mode-options {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.deck-mode-btn {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 8px;
+    background: rgba(26, 10, 46, 0.6);
+    color: #f5f0e6;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.deck-mode-btn:hover {
+    border-color: #d4af37;
+}
+
+.deck-mode-btn--active {
+    background: #d4af37;
+    color: #1a1a2e;
+    font-weight: bold;
+    border-color: #d4af37;
+}
+
+.deck-mode-hint {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    opacity: 0.65;
+}
+
 /* Responsive: reduce columnas en pantallas angostas para que las cartas no se aplasten */
 @media (max-width: 900px) {
     .deck-grid {

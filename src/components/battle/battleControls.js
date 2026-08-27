@@ -10,10 +10,11 @@ class BattleControls extends HTMLElement {
         this.enabled = false;
     }
 
-    setControls(card, actions, enabled) {
+    setControls(card, actions, enabled, statusMessage = null) {
         this.card = card;
         this.actions = actions;
         this.enabled = enabled;
+        this.statusMessage = statusMessage;
         this.render();
         this.configurarEventos();
     }
@@ -21,6 +22,15 @@ class BattleControls extends HTMLElement {
     render() {
         if (!this.card) {
             this.innerHTML = '';
+            return;
+        }
+
+        if (this.statusMessage) {
+            this.innerHTML = `
+                <div class="battle-controls battle-controls--auto">
+                    <p class="battle-auto-message">${this.statusMessage}</p>
+                </div>
+            `;
             return;
         }
 

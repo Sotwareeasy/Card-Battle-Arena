@@ -64,6 +64,7 @@
     border: 2px solid #d4af37;
     border-radius: 10px;
     padding: 1rem;
+    position: relative;
     box-shadow:
         0 0 20px rgba(212, 175, 55, 0.15),
         inset 0 1px 0 rgba(212, 175, 55, 0.1);
@@ -235,6 +236,103 @@
 .battle-action-lock {
     margin-left: 0.4rem;
     font-size: 0.75rem;
+}
+
+/* Selector de modo (manual / automático) dentro de la batalla */
+.battle-mode-bar {
+    margin-bottom: 1rem;
+}
+
+.battle-mode-btn {
+    background: rgba(30, 10, 45, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    color: #f5f0e6;
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.battle-mode-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Panel de controles cuando hay un turno automático en curso */
+.battle-controls--auto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+}
+
+.battle-auto-message {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #c89bff;
+    margin: 0;
+    animation: battleAutoPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes battleAutoPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Mensaje flotante de golpe crítico / esquive */
+.battle-feedback {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 5;
+    animation: battleFeedbackFloat 0.9s ease forwards;
+}
+
+.battle-feedback--critical {
+    color: #ffd23f;
+    background: rgba(60, 30, 0, 0.85);
+    border: 1px solid #ffd23f;
+    text-shadow: 0 0 10px rgba(255, 210, 63, 0.8);
+}
+
+.battle-feedback--dodge {
+    color: #6bc7ff;
+    background: rgba(10, 30, 45, 0.85);
+    border: 1px solid #6bc7ff;
+    text-shadow: 0 0 10px rgba(107, 199, 255, 0.8);
+}
+
+@keyframes battleFeedbackFloat {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 10px) scale(0.85);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -5px) scale(1.05);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -25px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -40px) scale(0.95);
+    }
 }
 
 /* Resultado final */
