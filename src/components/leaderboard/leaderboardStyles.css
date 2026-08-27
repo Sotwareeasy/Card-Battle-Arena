@@ -260,3 +260,23 @@
     box-shadow: 0 0 6px rgba(74, 127, 201, 0.4);
 }
 
+
+.leaderboard-play-again-btn {
+    display: block !important;
+    margin: 1.2rem auto 0 !important;
+    padding: 0.5rem 1.8rem !important;
+    background: transparent !important;
+    border: 2px solid #b8860b !important;
+    color: #d4af37 !important;
+    border-radius: 25px !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 0.9rem !important;
+    cursor: pointer !important;
+    width: auto !important;
+    max-width: 200px !important;
+}
+.leaderboard-play-again-btn:hover {
+    background: #b8860b !important;
+    color: #1a1040 !important;
+    font-weight: bold !important;
+}
