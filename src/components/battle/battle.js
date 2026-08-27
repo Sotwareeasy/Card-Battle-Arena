@@ -223,17 +223,32 @@ class BattleArena extends HTMLElement {
 
     performMachineTurn() {
         this.pendingTimeoutId = null;
-        this.turnInProgress = false; // Liberamos el flag ANTES de procesar
+        this.turnInProgress = false;
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
 
-        const decision = decideAutoAction(this.state, 'machine');
-        if (decision.type === 'attack') {
-            engine.performAttack(this.state, 'machine', decision.attackId);
-        } else if (decision.type === 'defense') {
-            engine.performDefense(this.state, 'machine');
-        } else if (decision.type === 'special') {
-            engine.performSpecial(this.state, 'machine');
+        try {
+            const decision = decideAutoAction(this.state, 'machine');
+            
+            if (decision && decision.type === 'attack') {
+                engine.performAttack(this.state, 'machine', decision.attackId);
+            } else if (decision && decision.type === 'defense') {
+                engine.performDefense(this.state, 'machine');
+            } else if (decision && decision.type === 'special') {
+                engine.performSpecial(this.state, 'machine');
+            } else {
+                // Fallback: Si la IA falla o no decide por estar el rival defendiendo, forzar ataque del primer slot
+                const activeCard = engine.getActiveCard(this.state, 'machine');
+                const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
+                engine.performAttack(this.state, 'machine', defaultAttackId);
+            }
+        } catch (error) {
+            console.warn('Error durante el turno de la máquina, aplicando fallback:', error);
+            // Fallback de seguridad para no congelar la pantalla
+            const activeCard = engine.getActiveCard(this.state, 'machine');
+            const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
+            engine.performAttack(this.state, 'machine', defaultAttackId);
         }
+
         this.handleStateChange();
     }
 
@@ -258,17 +273,30 @@ class BattleArena extends HTMLElement {
 
     performAutoPlayerTurn() {
         this.pendingTimeoutId = null;
-        this.turnInProgress = false; // Liberamos el flag ANTES de procesar
+        this.turnInProgress = false;
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS || this.state.turn !== 'player') return;
 
-        const decision = decideAutoAction(this.state, 'player');
-        if (decision.type === 'attack') {
-            engine.performAttack(this.state, 'player', decision.attackId);
-        } else if (decision.type === 'defense') {
-            engine.performDefense(this.state, 'player');
-        } else if (decision.type === 'special') {
-            engine.performSpecial(this.state, 'player');
+        try {
+            const decision = decideAutoAction(this.state, 'player');
+            
+            if (decision && decision.type === 'attack') {
+                engine.performAttack(this.state, 'player', decision.attackId);
+            } else if (decision && decision.type === 'defense') {
+                engine.performDefense(this.state, 'player');
+            } else if (decision && decision.type === 'special') {
+                engine.performSpecial(this.state, 'player');
+            } else {
+                const activeCard = engine.getActiveCard(this.state, 'player');
+                const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
+                engine.performAttack(this.state, 'player', defaultAttackId);
+            }
+        } catch (error) {
+            console.warn('Error durante el turno automático del jugador:', error);
+            const activeCard = engine.getActiveCard(this.state, 'player');
+            const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
+            engine.performAttack(this.state, 'player', defaultAttackId);
         }
+
         this.handleStateChange();
     }
 
