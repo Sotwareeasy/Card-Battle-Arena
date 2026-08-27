@@ -276,6 +276,8 @@ factor aleatorio de daño → ¿esquiva? → ¿crítico? → reducción por defe
 ## 👤 Autor
 Autor del proyecto: 👨‍💻 **Nicolás Fandiño** (MrFDV02) y 🧙‍♂️ **Fabián Uribe** (Sotwareeasy).
 
+🌐 **[Jugar ahora](https://bubbly-kindness-production-9147.up.railway.app/)**
+
 <div align="center">
 
 *"It is our choices, Harry, that show what we truly are, far more than our abilities."* — Albus Dumbledore
