@@ -65,7 +65,7 @@ class BattleArena extends HTMLElement {
                 <p class="battle-turn-indicator"></p>
                 <div class="battle-mode-bar">
                     <button type="button" class="battle-mode-btn" data-action="toggle-mode">
-                        ${this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual'}
+                        ${this.mode === 'automatic' ? '烙 Modo: Automático' : ' Modo: Manual'}
                     </button>
                 </div>
                 <div class="battle-field">
@@ -73,8 +73,8 @@ class BattleArena extends HTMLElement {
                     <span class="battle-vs">VS</span>
                     <battle-card class="battle-side battle-side--machine"></battle-card>
                 </div>
-                                <battle-controls></battle-controls>
-                <button class="battle-surrender-btn">🏳️ Terminar Batalla</button>
+                <battle-controls></battle-controls>
+                <button class="battle-surrender-btn">️ Terminar Batalla</button>
             </section>
         `;
     }
@@ -92,7 +92,7 @@ class BattleArena extends HTMLElement {
             this.handleStateChange();
         });
 
-                this.addEventListener('action-special', () => {
+        this.addEventListener('action-special', () => {
             if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performSpecial(this.state, 'player');
             this.handleStateChange();
@@ -112,22 +112,26 @@ class BattleArena extends HTMLElement {
         });
     }
 
-    // Cambia entre modo manual y automático desde el control de la propia
-    // pantalla de batalla (requisito: control claramente identificado).
+    // Cambia entre modo manual y automático desde el control de la propia pantalla de batalla
     toggleMode() {
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
-        if (this.turnInProgress) return; // no se puede cambiar de modo con una acción automática ya en curso
 
         this.mode = this.mode === 'automatic' ? 'manual' : 'automatic';
 
         const modeBtn = this.querySelector('.battle-mode-btn');
         if (modeBtn) {
-            modeBtn.textContent = this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual';
+            modeBtn.textContent = this.mode === 'automatic' ? '烙 Modo: Automático' : ' Modo: Manual';
+        }
+
+        // Al cambiar a manual, cancelamos cualquier acción automática en espera y liberamos la bandera
+        if (this.mode === 'manual' && this.isPlayerTurn()) {
+            this.clearPendingTimeout();
+            this.turnInProgress = false;
         }
 
         this.syncUI();
 
-        if (this.mode === 'automatic' && this.isPlayerTurn()) {
+        if (this.mode === 'automatic' && this.isPlayerTurn() && !this.turnInProgress) {
             this.scheduleAutoPlayerTurn();
         }
     }
@@ -172,6 +176,7 @@ class BattleArena extends HTMLElement {
         }
 
         this.turnInProgress = true;
+        this.clearPendingTimeout();
         this.pendingTimeoutId = setTimeout(() => {
             this.pendingTimeoutId = null;
             this.turnInProgress = false;
@@ -200,22 +205,25 @@ class BattleArena extends HTMLElement {
     // --- Turno de la máquina ---
 
     scheduleMachineTurn() {
+        if (this.turnInProgress) return; // Evita duplicar llamadas si ya hay una animación o turno en marcha
+
         const controls = this.querySelector('battle-controls');
         if (controls) {
             controls.setControls(
                 engine.getActiveCard(this.state, 'machine'),
                 { attackIds: [], canDefend: false, canUseSpecial: false },
                 false,
-                '🤖 Turno de la máquina...'
+                '烙 Turno de la máquina...'
             );
         }
         this.turnInProgress = true;
+        this.clearPendingTimeout();
         this.pendingTimeoutId = setTimeout(() => this.performMachineTurn(), MACHINE_TURN_DELAY_MS);
     }
 
     performMachineTurn() {
         this.pendingTimeoutId = null;
-        this.turnInProgress = false;
+        this.turnInProgress = false; // Liberamos el flag ANTES de procesar
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
 
         const decision = decideAutoAction(this.state, 'machine');
@@ -230,27 +238,27 @@ class BattleArena extends HTMLElement {
     }
 
     // --- Modo automático del jugador ---
-    // Usa la misma estrategia programada (machineAI.js) que la máquina,
-    // aplicada ahora al lado 'player'. Se ejecuta con una pausa visible
-    // (setTimeout) para que el flujo se pueda seguir con claridad.
 
     scheduleAutoPlayerTurn() {
+        if (this.turnInProgress) return; // Evita duplicar llamadas si ya hay una animación o turno en marcha
+
         const controls = this.querySelector('battle-controls');
         if (controls) {
             controls.setControls(
                 engine.getActiveCard(this.state, 'player'),
                 { attackIds: [], canDefend: false, canUseSpecial: false },
                 false,
-                '🤖 Acción automática en curso...'
+                '烙 Acción automática en curso...'
             );
         }
         this.turnInProgress = true;
+        this.clearPendingTimeout();
         this.pendingTimeoutId = setTimeout(() => this.performAutoPlayerTurn(), AUTO_PLAYER_TURN_DELAY_MS);
     }
 
     performAutoPlayerTurn() {
         this.pendingTimeoutId = null;
-        this.turnInProgress = false;
+        this.turnInProgress = false; // Liberamos el flag ANTES de procesar
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS || this.state.turn !== 'player') return;
 
         const decision = decideAutoAction(this.state, 'player');
@@ -318,7 +326,7 @@ class BattleArena extends HTMLElement {
                     activeCard,
                     { attackIds: [], canDefend: false, canUseSpecial: false },
                     false,
-                    '🤖 Acción automática en curso...'
+                    '烙 Acción automática en curso...'
                 );
             } else {
                 const availableActions = engine.getAvailableActions(this.state, 'player');
@@ -330,7 +338,7 @@ class BattleArena extends HTMLElement {
                 activeCard,
                 { attackIds: [], canDefend: false, canUseSpecial: false },
                 false,
-                '🤖 Turno de la máquina...'
+                '烙 Turno de la máquina...'
             );
         }
     }
@@ -342,12 +350,11 @@ class BattleArena extends HTMLElement {
 
         const resultBanner = document.createElement('div');
         resultBanner.className = `battle-result ${isPlayerWinner ? 'battle-result--win' : 'battle-result--loss'}`;
-        resultBanner.textContent = isPlayerWinner ? '🏆 ¡Victoria!' : '💀 Derrota';
+        resultBanner.textContent = isPlayerWinner ? ' ¡Victoria!' : ' Derrota';
 
         this.querySelector('.battle-arena').appendChild(resultBanner);
         this.playSound(isPlayerWinner ? '/sounds/victory.mp3' : '/sounds/defeat.mp3');
 
-        // La Etapa 9 escuchará este evento para actualizar puntos y guardar el historial.
         this.dispatchEvent(new CustomEvent('battle-ended', {
             detail: {
                 status: this.state.status,
