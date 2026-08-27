@@ -31,7 +31,10 @@ class PlayerLogin extends HTMLElement {
                     <input id="login-nickname" name="nickname" type="text" class="auth-input" autocomplete="off" ${this.state === STATE.LOADING ? 'disabled' : ''} />
 
                     <label for="login-password" class="auth-label">Contraseña</label>
-                    <input id="login-password" name="password" type="password" class="auth-input" autocomplete="current-password" ${this.state === STATE.LOADING ? 'disabled' : ''} />
+                    <div class="auth-input-wrapper">
+                        <input id="login-password" name="password" type="password" class="auth-input" autocomplete="current-password" ${this.state === STATE.LOADING ? 'disabled' : ''} />
+                        <button type="button" class="auth-eye-btn" data-target="login-password">👁</button>
+                    </div>
 
                     <button type="submit" class="auth-button" ${this.state === STATE.LOADING ? 'disabled' : ''}>
                         ${this.state === STATE.LOADING ? 'Verificando...' : 'Ingresar'}
@@ -49,6 +52,15 @@ class PlayerLogin extends HTMLElement {
 
     configurarEventos() {
         this.querySelector('.auth-form').addEventListener('submit', (event) => this.handleSubmit(event));
+
+        this.querySelectorAll('.auth-eye-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const input = this.querySelector(`#${btn.dataset.target}`);
+                if (!input) return;
+                input.type = input.type === 'password' ? 'text' : 'password';
+                btn.textContent = input.type === 'password' ? '👁' : '🔒';
+            });
+        });
 
         this.querySelector('[data-action="switch-register"]').addEventListener('click', () => {
             this.dispatchEvent(new CustomEvent('switch-auth-screen', {

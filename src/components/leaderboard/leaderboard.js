@@ -82,6 +82,7 @@ class LeaderboardView extends HTMLElement {
                 <span class="leaderboard-nickname">${player.nickname}</span>
                 <span class="leaderboard-stat">${player.points} pts</span>
                 <span class="leaderboard-stat">${player.wins} victorias</span>
+                <span class="leaderboard-stat">${player.losses} derrotas</span>
                 <span class="leaderboard-stat">${player.gamesPlayed} partidas</span>
             </li>
         `;

@@ -4,6 +4,8 @@
 
 import { patchPlayer } from '../../api/playersApi.js';
 import { postBattle } from '../../api/battlesApi.js';
+import { startAmbientMusic } from '../../utils/ambientMusic.js';
+import { saveSession, loadSession, clearSession } from '../../utils/session.js';
 
 const SCREEN = {
     REGISTER: 'register',
@@ -20,7 +22,7 @@ const POINTS_ON_WIN = 50;
 const POINTS_ON_LOSS = 10;
 
 class GameApp extends HTMLElement {
-    constructor() {
+        constructor() {
         super();
         this.currentPlayer = null;
         this.currentScreen = SCREEN.REGISTER;
@@ -31,13 +33,43 @@ class GameApp extends HTMLElement {
         this.currentAdmin = null;
 
         // Estado de la pantalla de resultados
-        this.lastResult = null;      // 'win' | 'loss'
+        this.lastResult = null;      // 'win' | 'loss' | 'abandoned'
         this.pointsAwarded = 0;
         this.isSavingResults = false;
         this.saveError = '';
 
+        // Si había una sesión guardada de un refresco anterior, se restaura
+        // aquí (jugador -> selección de mazo, admin -> panel administrativo).
+        // La batalla en curso NO se restaura: solo la sesión de login.
+        this.restoreSession();
+
         this.render();
         this.configurarEventos();
+        document.addEventListener('click', () => startAmbientMusic(), { once: true });
+    }
+
+    // Lee las sesiones guardadas (si existen) y ajusta el estado inicial ANTES
+    // del primer render, para que el refresco de página no vuelva siempre
+    // a la pantalla de registro. Jugador y admin se restauran de forma
+    // INDEPENDIENTE: cerrar una no afecta a la otra.
+    restoreSession() {
+        const playerData = loadSession('player');
+        const adminData = loadSession('admin');
+
+        if (playerData) {
+            this.currentPlayer = playerData;
+            this.currentScreen = SCREEN.DECK_SELECTION;
+        }
+
+        if (adminData) {
+            this.currentAdmin = adminData;
+            // Si no había jugador, la pantalla inicial es el panel admin.
+            // Si sí había jugador, se prioriza su pantalla (el admin queda
+            // disponible igual vía el botón "⚙ Admin" del header).
+            if (!playerData) {
+                this.currentScreen = SCREEN.ADMIN_PANEL;
+            }
+        }
     }
 
     render() {
@@ -48,7 +80,9 @@ class GameApp extends HTMLElement {
                 ${this.currentPlayer ? `<p class="game-header-player">Jugador: ${this.currentPlayer.nickname}</p>` : ''}
                 ${this.currentAdmin ? `<p class="game-header-player">Admin: ${this.currentAdmin.username}</p>` : ''}
                 <div class="game-header-actions">
-                    ${this.currentPlayer ? `<button type="button" class="game-header-admin-link" data-action="logout">🚪 Cerrar sesión</button>` : ''}
+                    ${(this.currentScreen !== SCREEN.REGISTER && this.currentScreen !== SCREEN.LOGIN) ? `<button type="button" class="game-header-admin-link" data-action="go-home">🏠 Inicio</button>` : ''}
+                    ${this.currentAdmin ? `<button type="button" class="game-header-admin-link" data-action="logout-admin">🔓 Cerrar admin</button>` : ''}
+                    ${this.currentPlayer ? `<button type="button" class="game-header-admin-link" data-action="logout"> Cerrar sesión</button>` : ''}
                     <button type="button" class="game-header-admin-link" data-action="go-admin">⚙ Admin</button>
                 </div>
             </header>
@@ -80,6 +114,7 @@ class GameApp extends HTMLElement {
             const battleArena = document.createElement('battle-arena');
             battleArena.playerDeck = this.playerDeck;
             battleArena.machineDeck = this.machineDeck;
+            battleArena.mode = this.battleMode || 'manual';
             screenContainer.appendChild(battleArena);
             return;
         }
@@ -108,16 +143,19 @@ class GameApp extends HTMLElement {
     // para no crear un archivo CSS nuevo solo para esta pantalla.
     renderResultsScreen() {
         const isWin = this.lastResult === 'win';
+        const isAbandoned = this.lastResult === 'abandoned';
+
+        const title = isAbandoned ? '️ Batalla abandonada' : (isWin ? ' ¡Victoria!' : ' Derrota');
 
         return `
             <section class="auth-card">
-                <h2 class="auth-title">${isWin ? '🏆 ¡Victoria!' : '💀 Derrota'}</h2>
+                <h2 class="auth-title">${title}</h2>
 
                 ${this.isSavingResults ? `
                     <p class="auth-message">Guardando resultados...</p>
                 ` : `
                     <p class="auth-message ${isWin ? 'auth-message--success' : ''}">
-                        +${this.pointsAwarded} puntos
+                        ${isAbandoned ? 'No se otorgaron puntos por abandonar la batalla.' : `+${this.pointsAwarded} puntos`}
                     </p>
                     <p class="auth-message">
                         Puntos totales: ${this.currentPlayer.points} ·
@@ -136,12 +174,14 @@ class GameApp extends HTMLElement {
     configurarEventos() {
         this.addEventListener('player-registered', (event) => {
             this.currentPlayer = event.detail.player;
+            saveSession('player', this.currentPlayer);
             this.currentScreen = SCREEN.DECK_SELECTION;
             this.render();
         });
 
         this.addEventListener('player-logged-in', (event) => {
             this.currentPlayer = event.detail.player;
+            saveSession('player', this.currentPlayer);
             this.currentScreen = SCREEN.DECK_SELECTION;
             this.render();
         });
@@ -154,6 +194,7 @@ class GameApp extends HTMLElement {
         this.addEventListener('deck-selected', (event) => {
             this.playerDeck = event.detail.playerDeck;
             this.machineDeck = event.detail.machineDeck;
+            this.battleMode = event.detail.mode || 'manual';
             this.currentScreen = SCREEN.BATTLE;
             this.render();
         });
@@ -175,11 +216,23 @@ class GameApp extends HTMLElement {
                 this.currentScreen = this.currentAdmin ? SCREEN.ADMIN_PANEL : SCREEN.ADMIN_LOGIN;
                 this.render();
             }
+            if (event.target.dataset.action === 'go-home') {
+                this.currentScreen = this.currentPlayer ? SCREEN.DECK_SELECTION : SCREEN.LOGIN;
+                this.render();
+            }
+            if (event.target.dataset.action === 'logout-admin') {
+                this.currentAdmin = null;
+                clearSession('admin');
+                this.currentScreen = this.currentPlayer ? SCREEN.DECK_SELECTION : SCREEN.LOGIN;
+                this.render();
+            }
             if (event.target.dataset.action === 'logout') {
                 this.currentPlayer = null;
+                this.currentAdmin = null;
                 this.playerDeck = null;
                 this.machineDeck = null;
                 this.lastResult = null;
+                clearSession();
                 this.currentScreen = SCREEN.LOGIN;
                 this.render();
             }
@@ -187,6 +240,7 @@ class GameApp extends HTMLElement {
 
         this.addEventListener('admin-logged-in', (event) => {
             this.currentAdmin = event.detail.admin;
+            saveSession('admin', this.currentAdmin);
             this.currentScreen = SCREEN.ADMIN_PANEL;
             this.render();
         });
@@ -194,9 +248,12 @@ class GameApp extends HTMLElement {
 
     async handleBattleEnded(battleDetail) {
         const isWin = battleDetail.status === 'player-won';
+        const isAbandoned = battleDetail.status === 'abandoned';
 
-        this.lastResult = isWin ? 'win' : 'loss';
-        this.pointsAwarded = isWin ? POINTS_ON_WIN : POINTS_ON_LOSS;
+        // Abandonar la batalla NO otorga los puntos fijos de victoria/derrota
+        // ni cuenta como una de ellas: solo se registra el intento.
+        this.lastResult = isAbandoned ? 'abandoned' : (isWin ? 'win' : 'loss');
+        this.pointsAwarded = isAbandoned ? 0 : (isWin ? POINTS_ON_WIN : POINTS_ON_LOSS);
         this.isSavingResults = true;
         this.saveError = '';
         this.currentScreen = SCREEN.RESULTS;
@@ -204,8 +261,8 @@ class GameApp extends HTMLElement {
 
         const updatedStats = {
             points: this.currentPlayer.points + this.pointsAwarded,
-            wins: this.currentPlayer.wins + (isWin ? 1 : 0),
-            losses: this.currentPlayer.losses + (isWin ? 0 : 1),
+            wins: this.currentPlayer.wins + (!isAbandoned && isWin ? 1 : 0),
+            losses: this.currentPlayer.losses + (!isAbandoned && !isWin ? 1 : 0),
             gamesPlayed: this.currentPlayer.gamesPlayed + 1
         };
 
@@ -217,6 +274,7 @@ class GameApp extends HTMLElement {
             pointsAwarded: this.pointsAwarded,
             playerDeck: battleDetail.playerDeckIds,
             machineDeck: battleDetail.machineDeckIds,
+            mode: battleDetail.mode || 'manual',
             startedAt: battleDetail.startedAt,
             endedAt: battleDetail.endedAt
         };
@@ -224,6 +282,7 @@ class GameApp extends HTMLElement {
         try {
             await patchPlayer(updatedStats, this.currentPlayer.id);
             this.currentPlayer = { ...this.currentPlayer, ...updatedStats };
+            saveSession('player', this.currentPlayer);
 
             await postBattle(battleRecord);
 

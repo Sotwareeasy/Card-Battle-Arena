@@ -15,13 +15,13 @@
 [![JSON Server](https://img.shields.io/badge/JSON%20Server-REST%20API-black?style=for-the-badge)](https://github.com/typicode/json-server)
 [![Railway](https://img.shields.io/badge/Deploy-Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://railway.app/)
 
-[![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow?style=flat-square)]()
+[![Status](https://img.shields.io/badge/status-en%20producción-brightgreen?style=flat-square)](https://bubbly-kindness-production-9147.up.railway.app/)
 [![Proyecto](https://img.shields.io/badge/tipo-proyecto%20académico-8A2BE2?style=flat-square)]()
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)]()
 
 <br />
 
-<img src="public/hogwarts-bg.png" width="100%" alt="Hogwarts Arena banner" />
+<img src="public/repoinfo.png" width="100%" alt="Hogwarts Arena banner" />
 
 </div>
 
@@ -197,7 +197,7 @@ npm run server
 npm run dev
 ```
 
-La API queda disponible en `http://localhost:3000` y el frontend en la URL que indique Vite (por defecto `http://localhost:5173`).
+> 🌐 **Producción:** Frontend en [bubbly-kindness-production-9147.up.railway.app](https://bubbly-kindness-production-9147.up.railway.app/) · API en [card-battle-arena-production-00d2.up.railway.app](https://card-battle-arena-production-00d2.up.railway.app)
 
 <br />
 
@@ -207,7 +207,7 @@ La API queda disponible en `http://localhost:3000` y el frontend en la URL que i
 |---|---|---|
 | `VITE_API_MODE` | Entorno activo: `development` o `production` | `development` |
 | `VITE_API_DEV_URL` | URL del `json-server` local | `http://localhost:3000` |
-| `VITE_API_PROD_URL` | URL de la API en producción (Railway) | `https://api-hogwarts.up.railway.app` |
+| `VITE_API_PROD_URL` | URL de la API en producción (Railway) | `https://card-battle-arena-production-ea87.up.railway.app` |
 
 > ⚠️ Estas variables se "hornean" en el bundle **en tiempo de build** (comportamiento estándar de Vite) — deben estar definidas *antes* de correr `npm run build`.
 
@@ -230,6 +230,34 @@ El volumen persistente es lo que garantiza que los datos (jugadores, puntajes, h
 
 <br />
 
+## 🧪 Nuevas mecánicas (extensión individual — examen)
+
+Extensión desarrollada individualmente sobre la base entregada en equipo, sin migrar de framework ni reescribir la arquitectura existente.
+
+| Mecánica | Regla | Dónde vive |
+|---|---|---|
+| ✨ **Golpe crítico** | 12% de probabilidad · daño ×1.5 | `battleEngine.js` → `resolveDamage()` |
+| 💨 **Esquivar ataque** | 8% de probabilidad · daño final = 0 | `battleEngine.js` → `resolveDamage()` |
+| 🤖 **Modo de batalla automática** | El jugador también es controlado por una estrategia programada; alternable en vivo desde un botón dentro de la propia batalla | `battle.js`, `machineAI.js` (`decideAutoAction`) |
+| 💾 **Persistencia del modo** | Cada partida guarda `{ mode: "manual" \| "automatic" }` en su registro de historial | `gameApp.js` |
+
+**Orden de resolución de daño** (idéntico para ataques normales y para el especial):
+
+```
+factor aleatorio de daño → ¿esquiva? → ¿crítico? → reducción por defensa → redondeo → resta de HP
+```
+
+**Estrategia automática** (`machineAI.js`, función `decideAutoAction`, reutilizada tanto por la máquina como por el jugador en modo automático):
+- Prioriza el poder especial cuando está disponible.
+- Aumenta la probabilidad de defender si la vida baja del 30%.
+- Evita defender más de 2 veces seguidas.
+
+**Control de temporizadores:** todo el modo automático usa `setTimeout` encadenado (nunca `setInterval`), con una bandera `turnInProgress` que evita doble-acción, y limpieza explícita del temporizador pendiente al rendirse, terminar la batalla o desmontar el componente.
+
+**Archivos modificados:** `battleEngine.js`, `machineAI.js`, `soundManager.js`, `battleCard.js`, `battleControls.js`, `battle.js`, `deckSelector.js`, `deckStyles.css`, `battleStyles.css`, `gameApp.js`.
+
+<br />
+
 ## 🗺️ Roadmap
 
 - [x] Registro de jugadores
@@ -239,6 +267,7 @@ El volumen persistente es lo que garantiza que los datos (jugadores, puntajes, h
 - [x] Panel administrativo (CRUD de cartas)
 - [x] Autenticación con contraseña + login/logout de jugadores
 - [x] Persistencia en Railway con volumen
+- [x] Modo de batalla automática + golpe crítico + esquive (examen)
 - [ ] Historial de batallas por jugador
 - [ ] Modo multijugador en tiempo real
 
@@ -246,7 +275,6 @@ El volumen persistente es lo que garantiza que los datos (jugadores, puntajes, h
 
 ## 👤 Autor
 
-Proyecto académico desarrollado con 🪄 por **Felipe - Fabian**.
 
 <div align="center">
 

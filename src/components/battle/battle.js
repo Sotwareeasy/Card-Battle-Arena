@@ -1,4 +1,3 @@
-// battle.js
 // Orquestador de la pantalla de combate. Conecta battleEngine.js (lógica pura)
 // con battle-card y battle-controls (UI), maneja animaciones y sonido.
 //
@@ -7,12 +6,14 @@
 // de insertar el elemento en el DOM.
 
 import * as engine from '../../utils/battleEngine.js';
-import { decideMachineAction } from '../../utils/machineAI.js';
+import { play } from '../../utils/soundManager.js';
+import { decideAutoAction } from '../../utils/machineAI.js';
 import './battleCard.js';
 import './battleControls.js';
 import './injectBattleStyles.js';
 
 const MACHINE_TURN_DELAY_MS = 1200;
+const AUTO_PLAYER_TURN_DELAY_MS = 1200; // misma pausa visible que el turno de la máquina
 const DEFEAT_TRANSITION_MS = 900;
 
 class BattleArena extends HTMLElement {
@@ -23,6 +24,11 @@ class BattleArena extends HTMLElement {
         this.state = null;
         this.previousLogLength = 0;
         this.startedAt = null;
+        // 'manual' (default) o 'automatic'. gameApp.js puede fijar esta
+        // propiedad ANTES de insertar el elemento en el DOM.
+        this.mode = 'manual';
+        this.pendingTimeoutId = null; // permite cancelar el turno automático pendiente
+        this.turnInProgress = false;  // evita doble acción / cambios de modo a mitad de turno
     }
 
     connectedCallback() {
@@ -34,6 +40,21 @@ class BattleArena extends HTMLElement {
 
         if (this.state.turn === 'machine') {
             this.scheduleMachineTurn();
+        } else if (this.mode === 'automatic') {
+            this.scheduleAutoPlayerTurn();
+        }
+    }
+
+    // Se detienen los temporizadores pendientes si el componente se desmonta
+    // (ej. el jugador navega fuera de la pantalla de batalla).
+    disconnectedCallback() {
+        this.clearPendingTimeout();
+    }
+
+    clearPendingTimeout() {
+        if (this.pendingTimeoutId) {
+            clearTimeout(this.pendingTimeoutId);
+            this.pendingTimeoutId = null;
         }
     }
 
@@ -41,42 +62,89 @@ class BattleArena extends HTMLElement {
         this.innerHTML = `
             <section class="battle-arena">
                 <p class="battle-turn-indicator"></p>
+                <div class="battle-mode-bar">
+                    <button type="button" class="battle-mode-btn" data-action="toggle-mode">
+                        ${this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual'}
+                    </button>
+                </div>
+                <div class="battle-scoreboard">
+                    <span class="battle-score battle-score--player" id="score-player">🧙 0</span>
+                    <span class="battle-score-vs">cartas derrotadas</span>
+                    <span class="battle-score battle-score--machine" id="score-machine">0 🤖</span>
+                </div>
                 <div class="battle-field">
                     <battle-card class="battle-side battle-side--player"></battle-card>
                     <span class="battle-vs">VS</span>
                     <battle-card class="battle-side battle-side--machine"></battle-card>
                 </div>
-                                <battle-controls></battle-controls>
+                <battle-controls></battle-controls>
                 <button class="battle-surrender-btn">🏳️ Terminar Batalla</button>
+                <div class="battle-log">
+                    <h4 class="battle-log-title">📜 Registro de batalla</h4>
+                    <ul class="battle-log-list"></ul>
+                </div>
             </section>
         `;
     }
 
     configurarEventos() {
         this.addEventListener('action-attack', (event) => {
-            if (!this.isPlayerTurn()) return;
+            if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performAttack(this.state, 'player', event.detail.attackId);
             this.handleStateChange();
         });
 
         this.addEventListener('action-defense', () => {
-            if (!this.isPlayerTurn()) return;
+            if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performDefense(this.state, 'player');
             this.handleStateChange();
         });
 
-                this.addEventListener('action-special', () => {
-            if (!this.isPlayerTurn()) return;
+        this.addEventListener('action-special', () => {
+            if (!this.isPlayerTurn() || this.mode === 'automatic' || this.turnInProgress) return;
             engine.performSpecial(this.state, 'player');
             this.handleStateChange();
         });
 
         this.addEventListener('click', (e) => {
+            if (e.target.closest('.battle-mode-btn')) {
+                this.toggleMode();
+                return;
+            }
+
             if (!e.target.classList.contains('battle-surrender-btn')) return;
             if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
-            this.state.status = engine.BATTLE_STATUS.MACHINE_WON;
+            this.clearPendingTimeout();
+            // Abandonar NO es una derrota: no debe otorgar los puntos fijos de
+            // victoria/derrota. gameApp.js decide, según este status, no sumar
+            // puntos y solo registrar la partida como abandonada.
+            this.state.status = engine.BATTLE_STATUS.ABANDONED;
             this.handleBattleEnd();
         });
+    }
+
+    // Cambia entre modo manual y automático desde el control de la propia pantalla de batalla
+    toggleMode() {
+        if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
+
+        this.mode = this.mode === 'automatic' ? 'manual' : 'automatic';
+
+        const modeBtn = this.querySelector('.battle-mode-btn');
+        if (modeBtn) {
+            modeBtn.textContent = this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual';
+        }
+
+        // Al cambiar a manual, cancelamos cualquier acción automática en espera y liberamos la bandera
+        if (this.mode === 'manual' && this.isPlayerTurn()) {
+            this.clearPendingTimeout();
+            this.turnInProgress = false;
+        }
+
+        this.syncUI();
+
+        if (this.mode === 'automatic' && this.isPlayerTurn() && !this.turnInProgress) {
+            this.scheduleAutoPlayerTurn();
+        }
     }
 
     isPlayerTurn() {
@@ -89,15 +157,59 @@ class BattleArena extends HTMLElement {
         const newEntries = this.state.log.slice(this.previousLogLength);
         this.previousLogLength = this.state.log.length;
 
+        newEntries.forEach((entry) => this.appendLogEntry(entry));
+
         const defeatedEntry = newEntries.find((entry) => entry.type === 'defeated');
 
         if (defeatedEntry) {
             this.showDefeatSequence(defeatedEntry, newEntries);
         } else {
-            this.playAnimationsFromLog(newEntries);
+            this.safePlayAnimationsFromLog(newEntries);
             this.syncUI();
             this.continueAfterAction();
         }
+    }
+
+    appendLogEntry(entry) {
+        const list = this.querySelector('.battle-log-list');
+        if (!list) return;
+
+        const side = entry.side === 'player' ? '🧙 Jugador' : '🤖 Máquina';
+        let text = '';
+
+        if (entry.type === 'attack') {
+            if (entry.dodged) {
+                text = `${side} usó ${entry.attackName} — ⚡ ¡ESQUIVADO! (0 daño)`;
+            } else if (entry.critical) {
+                text = `${side} usó ${entry.attackName} — 💥 ¡CRÍTICO! ${entry.damage} daño`;
+            } else {
+                text = `${side} usó ${entry.attackName} — ${entry.damage} daño`;
+            }
+        } else if (entry.type === 'special') {
+            if (entry.dodged) {
+                text = `${side} usó ${entry.specialName} — ⚡ ¡ESQUIVADO! (0 daño)`;
+            } else if (entry.critical) {
+                text = `${side} usó ${entry.specialName} — 💥 ¡CRÍTICO! ${entry.damage} daño`;
+            } else {
+                text = `${side} usó ${entry.specialName} — ${entry.damage} daño`;
+            }
+        } else if (entry.type === 'defense') {
+            text = `${side} usó ${entry.defenseName} — 🛡️ Defensa activa`;
+        } else if (entry.type === 'defeated') {
+            text = `💀 ${entry.cardName} fue derrotada`;
+        } else if (entry.type === 'card-entered') {
+            text = `✨ ${entry.cardName} entra al campo`;
+        } else {
+            return;
+        }
+
+        const now = new Date();
+        const time = now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const li = document.createElement('li');
+        li.className = `battle-log-entry battle-log-entry--${entry.type}${entry.critical ? ' battle-log-entry--critical' : ''}${entry.dodged ? ' battle-log-entry--dodged' : ''}`;
+        li.textContent = `[${time}] ${text}`;
+        list.appendChild(li);
+        list.scrollTop = list.scrollHeight;
     }
 
     // Muestra brevemente la carta en 0 HP antes de reemplazarla por la siguiente del mazo.
@@ -105,7 +217,7 @@ class BattleArena extends HTMLElement {
         const preDefeatEntries = newEntries.filter(
             (entry) => entry !== defeatedEntry && entry.type !== 'card-entered'
         );
-        this.playAnimationsFromLog(preDefeatEntries);
+        this.safePlayAnimationsFromLog(preDefeatEntries);
 
         const defeatedSideEl = this.querySelector(`.battle-side--${defeatedEntry.side}`);
         if (defeatedSideEl && defeatedSideEl.cardData) {
@@ -118,7 +230,11 @@ class BattleArena extends HTMLElement {
             this.playSound(defeatedSideEl.cardData.sounds?.defeated);
         }
 
-        setTimeout(() => {
+        this.turnInProgress = true;
+        this.clearPendingTimeout();
+        this.pendingTimeoutId = setTimeout(() => {
+            this.pendingTimeoutId = null;
+            this.turnInProgress = false;
             this.syncUI();
             const enteredEntry = newEntries.find((entry) => entry.type === 'card-entered');
             if (enteredEntry) {
@@ -136,37 +252,130 @@ class BattleArena extends HTMLElement {
         }
         if (this.state.turn === 'machine') {
             this.scheduleMachineTurn();
+        } else if (this.mode === 'automatic') {
+            this.scheduleAutoPlayerTurn();
         }
     }
 
-    // --- Turno de la máquina (placeholder temporal, se reemplaza en Etapa 8) ---
+    // --- Turno de la máquina ---
 
     scheduleMachineTurn() {
+        if (this.turnInProgress) return; // Evita duplicar llamadas si ya hay una animación o turno en marcha
+
         const controls = this.querySelector('battle-controls');
         if (controls) {
             controls.setControls(
                 engine.getActiveCard(this.state, 'machine'),
                 { attackIds: [], canDefend: false, canUseSpecial: false },
-                false
+                false,
+                '🤖 Turno de la máquina...'
             );
         }
-        setTimeout(() => this.performMachineTurn(), MACHINE_TURN_DELAY_MS);
+        this.turnInProgress = true;
+        this.clearPendingTimeout();
+        this.pendingTimeoutId = setTimeout(() => this.performMachineTurn(), MACHINE_TURN_DELAY_MS);
     }
 
-performMachineTurn() {
+    performMachineTurn() {
+        this.pendingTimeoutId = null;
+        this.turnInProgress = false;
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
-        const decision = decideMachineAction(this.state, 'machine');
-        if (decision.type === 'attack') {
-            engine.performAttack(this.state, 'machine', decision.attackId);
-        } else if (decision.type === 'defense') {
-            engine.performDefense(this.state, 'machine');
-        } else if (decision.type === 'special') {
-            engine.performSpecial(this.state, 'machine');
+
+        try {
+            const available = engine.getAvailableActions(this.state, 'machine');
+            const decision = decideAutoAction(this.state, 'machine');
+
+            if (decision && decision.type === 'attack' && available.attackIds.includes(decision.attackId)) {
+                engine.performAttack(this.state, 'machine', decision.attackId);
+            } else if (decision && decision.type === 'defense' && available.canDefend) {
+                engine.performDefense(this.state, 'machine');
+            } else if (decision && decision.type === 'special' && available.canUseSpecial) {
+                engine.performSpecial(this.state, 'machine');
+            } else {
+                this.executeFallbackTurn('machine', available);
+            }
+        } catch (error) {
+            console.warn('Error durante el turno de la máquina, aplicando fallback:', error);
+            const available = engine.getAvailableActions(this.state, 'machine');
+            this.executeFallbackTurn('machine', available);
         }
+
         this.handleStateChange();
     }
 
+    // --- Modo automático del jugador ---
+
+    scheduleAutoPlayerTurn() {
+        if (this.turnInProgress) return; // Evita duplicar llamadas si ya hay una animación o turno en marcha
+
+        const controls = this.querySelector('battle-controls');
+        if (controls) {
+            controls.setControls(
+                engine.getActiveCard(this.state, 'player'),
+                { attackIds: [], canDefend: false, canUseSpecial: false },
+                false,
+                '🤖 Acción automática en curso...'
+            );
+        }
+        this.turnInProgress = true;
+        this.clearPendingTimeout();
+        this.pendingTimeoutId = setTimeout(() => this.performAutoPlayerTurn(), AUTO_PLAYER_TURN_DELAY_MS);
+    }
+
+    performAutoPlayerTurn() {
+        this.pendingTimeoutId = null;
+        this.turnInProgress = false;
+        if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS || this.state.turn !== 'player') return;
+
+        try {
+            const available = engine.getAvailableActions(this.state, 'player');
+            const decision = decideAutoAction(this.state, 'player');
+
+            if (decision && decision.type === 'attack' && available.attackIds.includes(decision.attackId)) {
+                engine.performAttack(this.state, 'player', decision.attackId);
+            } else if (decision && decision.type === 'defense' && available.canDefend) {
+                engine.performDefense(this.state, 'player');
+            } else if (decision && decision.type === 'special' && available.canUseSpecial) {
+                engine.performSpecial(this.state, 'player');
+            } else {
+                this.executeFallbackTurn('player', available);
+            }
+        } catch (error) {
+            console.warn('Error durante el turno automático del jugador:', error);
+            const available = engine.getAvailableActions(this.state, 'player');
+            this.executeFallbackTurn('player', available);
+        }
+
+        this.handleStateChange();
+    }
+
+    // --- Fallback de seguridad contra Cooldowns o IA bloqueada ---
+
+    executeFallbackTurn(side, available) {
+        if (available && available.attackIds && available.attackIds.length > 0) {
+            engine.performAttack(this.state, side, available.attackIds[0]);
+        } else if (available && available.canDefend) {
+            engine.performDefense(this.state, side);
+        } else if (available && available.canUseSpecial) {
+            engine.performSpecial(this.state, side);
+        } else {
+            const activeCard = engine.getActiveCard(this.state, side);
+            const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
+            engine.performAttack(this.state, side, defaultAttackId);
+        }
+    }
+
     // --- Animaciones y sonido ---
+
+    // Envoltorio defensivo: un fallo al animar/mostrar feedback (ej. crítico o esquive)
+    // NUNCA debe congelar la batalla ni impedir que se agende el siguiente turno.
+    safePlayAnimationsFromLog(entries) {
+        try {
+            this.playAnimationsFromLog(entries);
+        } catch (error) {
+            console.warn('Error al reproducir animaciones/sonido, se continúa la batalla:', error);
+        }
+    }
 
     playAnimationsFromLog(entries) {
         entries.forEach((entry) => {
@@ -176,10 +385,20 @@ performMachineTurn() {
                 const opponentSide = entry.side === 'player' ? 'machine' : 'player';
                 const opponentEl = this.querySelector(`.battle-side--${opponentSide}`);
                 if (sideEl) sideEl.triggerAnimation('battle-anim-attack');
-                if (opponentEl) opponentEl.triggerAnimation('battle-anim-damage');
 
                 const attackerCard = engine.getActiveCard(this.state, entry.side);
                 this.playSound(attackerCard.sounds?.[entry.type === 'special' ? 'special' : 'attack']);
+
+                if (entry.dodged) {
+                    if (opponentEl) opponentEl.showFeedback('¡ATAQUE ESQUIVADO!', 'dodge');
+                    play('dodge');
+                } else {
+                    if (opponentEl) opponentEl.triggerAnimation('battle-anim-damage');
+                    if (entry.critical) {
+                        if (opponentEl) opponentEl.showFeedback('¡GOLPE CRÍTICO!', 'critical');
+                        play('critical');
+                    }
+                }
             }
 
             if (entry.type === 'defense') {
@@ -188,6 +407,29 @@ performMachineTurn() {
                 this.playSound(defendingCard.sounds?.defense);
             }
         });
+    }
+
+    updateScoreboard() {
+        const scorePlayer = this.querySelector('#score-player');
+        const scoreMachine = this.querySelector('#score-machine');
+        if (!scorePlayer || !scoreMachine) return;
+
+        const playerDefeated = this.state.machine.deck.filter(c => c.currentHp === 0).length;
+        const machineDefeated = this.state.player.deck.filter(c => c.currentHp === 0).length;
+
+        scorePlayer.textContent = `🧙 ${playerDefeated}`;
+        scoreMachine.textContent = `${machineDefeated} 🤖`;
+
+        if (playerDefeated > machineDefeated) {
+            scorePlayer.style.color = '#00ff88';
+            scoreMachine.style.color = '#ff4444';
+        } else if (machineDefeated > playerDefeated) {
+            scorePlayer.style.color = '#ff4444';
+            scoreMachine.style.color = '#00ff88';
+        } else {
+            scorePlayer.style.color = '#d4af37';
+            scoreMachine.style.color = '#d4af37';
+        }
     }
 
     syncUI() {
@@ -204,28 +446,55 @@ performMachineTurn() {
 
         if (this.isPlayerTurn()) {
             const activeCard = engine.getActiveCard(this.state, 'player');
-            const availableActions = engine.getAvailableActions(this.state, 'player');
-            controlsEl.setControls(activeCard, availableActions, true);
+
+            if (this.mode === 'automatic') {
+                controlsEl.setControls(
+                    activeCard,
+                    { attackIds: [], canDefend: false, canUseSpecial: false },
+                    false,
+                    '🤖 Acción automática en curso...'
+                );
+            } else {
+                const availableActions = engine.getAvailableActions(this.state, 'player');
+                controlsEl.setControls(activeCard, availableActions, true);
+            }
         } else {
             const activeCard = engine.getActiveCard(this.state, 'machine');
-            controlsEl.setControls(activeCard, { attackIds: [], canDefend: false, canUseSpecial: false }, false);
+            controlsEl.setControls(
+                activeCard,
+                { attackIds: [], canDefend: false, canUseSpecial: false },
+                false,
+                '🤖 Turno de la máquina...'
+            );
         }
+
+        this.updateScoreboard();
     }
 
     handleBattleEnd() {
+        this.clearPendingTimeout();
+
         const isPlayerWinner = this.state.status === engine.BATTLE_STATUS.PLAYER_WON;
+        const isAbandoned = this.state.status === engine.BATTLE_STATUS.ABANDONED;
 
         const resultBanner = document.createElement('div');
-        resultBanner.className = `battle-result ${isPlayerWinner ? 'battle-result--win' : 'battle-result--loss'}`;
-        resultBanner.textContent = isPlayerWinner ? '🏆 ¡Victoria!' : '💀 Derrota';
+        if (isAbandoned) {
+            resultBanner.className = 'battle-result battle-result--abandoned';
+            resultBanner.textContent = '🏳️ Batalla abandonada';
+        } else {
+            resultBanner.className = `battle-result ${isPlayerWinner ? 'battle-result--win' : 'battle-result--loss'}`;
+            resultBanner.textContent = isPlayerWinner ? '🏆 ¡Victoria!' : '💀 Derrota';
+        }
 
         this.querySelector('.battle-arena').appendChild(resultBanner);
-        this.playSound(isPlayerWinner ? '/sounds/victory.mp3' : '/sounds/defeat.mp3');
+        if (!isAbandoned) {
+            this.playSound(isPlayerWinner ? '/sounds/victory.mp3' : '/sounds/defeat.mp3');
+        }
 
-        // La Etapa 9 escuchará este evento para actualizar puntos y guardar el historial.
         this.dispatchEvent(new CustomEvent('battle-ended', {
             detail: {
                 status: this.state.status,
+                mode: this.mode,
                 playerDeckIds: this.playerDeck.map((card) => card.id),
                 machineDeckIds: this.machineDeck.map((card) => card.id),
                 startedAt: this.startedAt,
@@ -238,12 +507,12 @@ performMachineTurn() {
 
     playSound(src) {
         if (!src) return;
-        const audio = new Audio(src);
-        audio.volume = 0.6;
-        audio.play().catch(() => {
-            // Los archivos de audio se agregan en la Etapa 24; hasta entonces
-            // el fallo de reproducción se ignora para no interrumpir la partida.
-        });
+        if (src.includes('attack')) play('attack');
+        else if (src.includes('defense')) play('defense');
+        else if (src.includes('special')) play('special');
+        else if (src.includes('defeated')) play('defeated');
+        else if (src.includes('victory')) play('victory');
+        else if (src.includes('defeat')) play('defeat');
     }
 }
 

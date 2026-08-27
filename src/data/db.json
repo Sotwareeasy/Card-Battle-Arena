@@ -8,122 +8,7 @@
   ],
   "players": [
     {
-      "id": "5aIzbubaesE",
-      "nickname": "Fabian",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-19T02:25:46.915Z"
-    },
-    {
-      "id": "player-1787196345281",
-      "nickname": "asdads",
-      "points": 50,
-      "wins": 1,
-      "losses": 0,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T03:25:45.281Z"
-    },
-    {
-      "id": "player-1787197678774",
-      "nickname": "dssfddsf",
-      "points": 50,
-      "wins": 1,
-      "losses": 0,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T03:47:58.774Z"
-    },
-    {
-      "id": "player-1787199013390",
-      "nickname": "asdasd",
-      "points": 50,
-      "wins": 1,
-      "losses": 0,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T04:10:13.390Z"
-    },
-    {
-      "id": "player-1787284137633",
-      "nickname": "zxczxc",
-      "points": 50,
-      "wins": 1,
-      "losses": 0,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-21T03:48:57.633Z"
-    },
-    {
-      "id": "player-1787189656201",
-      "nickname": "adssad",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T01:34:16.201Z"
-    },
-    {
-      "id": "player-1787192235575",
-      "nickname": "dfsfddsf",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-20T02:17:15.575Z"
-    },
-    {
-      "id": "player-1787288856821",
-      "nickname": "dee",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-21T05:07:36.821Z"
-    },
-    {
-      "id": "player-1787614380818",
-      "nickname": "jnnjnj",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-08-24T23:33:00.818Z"
-    },
-    {
-      "id": "player-1787616112980",
-      "nickname": "jjede",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-25T00:01:52.980Z"
-    },
-    {
-      "id": "player-1787616425472",
-      "nickname": "edededed",
-      "points": 30,
-      "wins": 0,
-      "losses": 3,
-      "gamesPlayed": 3,
-      "createdAt": "2026-08-25T00:07:05.473Z"
-    },
-    {
-      "id": "player-1787617492359",
-      "nickname": "yhyhy",
-      "points": 20,
-      "wins": 0,
-      "losses": 2,
-      "gamesPlayed": 2,
-      "createdAt": "2026-08-25T00:24:52.359Z"
-    },
-    {
-      "id": "player-1787619338029",
-      "nickname": "NicoF",
-      "password": "2707",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-08-25T00:55:38.029Z"
+    
     }
   ],
   "cards": [
@@ -1387,6 +1272,75 @@
       ],
       "startedAt": "2026-08-25T01:04:33.026Z",
       "endedAt": "2026-08-25T01:04:39.203Z"
+    },
+    {
+      "id": "battle-1787700208810",
+      "playerId": "player-1787619338029",
+      "playerNickname": "NicoF",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-008",
+        "card-003",
+        "card-004"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-013",
+        "card-006",
+        "card-012",
+        "card-018"
+      ],
+      "startedAt": "2026-08-25T23:23:10.738Z",
+      "endedAt": "2026-08-25T23:23:28.802Z"
+    },
+    {
+      "id": "battle-1787700423684",
+      "playerId": "player-1787619338029",
+      "playerNickname": "NicoF",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005",
+        "card-006"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-008",
+        "card-011",
+        "card-013",
+        "card-018"
+      ],
+      "startedAt": "2026-08-25T23:26:49.355Z",
+      "endedAt": "2026-08-25T23:27:03.678Z"
+    },
+    {
+      "id": "battle-1787700827729",
+      "playerId": "player-1787619338029",
+      "playerNickname": "NicoF",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-001",
+        "card-004",
+        "card-003",
+        "card-002",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-013",
+        "card-017",
+        "card-006",
+        "card-008",
+        "card-019"
+      ],
+      "startedAt": "2026-08-25T23:33:42.062Z",
+      "endedAt": "2026-08-25T23:33:47.726Z"
     }
   ]
 }

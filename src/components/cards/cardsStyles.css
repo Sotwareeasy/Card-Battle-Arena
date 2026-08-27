@@ -73,7 +73,7 @@
     border-radius: 6px;
     background: #1a1a2e;
     color: #f5f0e6;
-    cursor: pointer;
+    cursor: url('/wand-cursor.cur'), url('/wand-cursor.png'), pointer;
     font-size: 0.85rem;
 }
 
