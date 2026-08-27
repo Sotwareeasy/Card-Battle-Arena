@@ -9,7 +9,8 @@ import { computeRandomDamage } from './random.js';
 export const BATTLE_STATUS = {
     IN_PROGRESS: 'in-progress',
     PLAYER_WON: 'player-won',
-    MACHINE_WON: 'machine-won'
+    MACHINE_WON: 'machine-won',
+    ABANDONED: 'abandoned' // el jugador se rinde/abandona antes de que la batalla termine por sí sola
 };
 
 // Reglas de eventos probabilísticos (ver README, sección "Nuevas mecánicas")

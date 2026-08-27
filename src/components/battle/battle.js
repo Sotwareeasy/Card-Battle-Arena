@@ -106,7 +106,10 @@ class BattleArena extends HTMLElement {
             if (!e.target.classList.contains('battle-surrender-btn')) return;
             if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
             this.clearPendingTimeout();
-            this.state.status = engine.BATTLE_STATUS.MACHINE_WON;
+            // Abandonar NO es una derrota: no debe otorgar los puntos fijos de
+            // victoria/derrota. gameApp.js decide, según este status, no sumar
+            // puntos y solo registrar la partida como abandonada.
+            this.state.status = engine.BATTLE_STATUS.ABANDONED;
             this.handleBattleEnd();
         });
     }
@@ -394,13 +397,21 @@ class BattleArena extends HTMLElement {
         this.clearPendingTimeout();
 
         const isPlayerWinner = this.state.status === engine.BATTLE_STATUS.PLAYER_WON;
+        const isAbandoned = this.state.status === engine.BATTLE_STATUS.ABANDONED;
 
         const resultBanner = document.createElement('div');
-        resultBanner.className = `battle-result ${isPlayerWinner ? 'battle-result--win' : 'battle-result--loss'}`;
-        resultBanner.textContent = isPlayerWinner ? '🏆 ¡Victoria!' : '💀 Derrota';
+        if (isAbandoned) {
+            resultBanner.className = 'battle-result battle-result--abandoned';
+            resultBanner.textContent = '🏳️ Batalla abandonada';
+        } else {
+            resultBanner.className = `battle-result ${isPlayerWinner ? 'battle-result--win' : 'battle-result--loss'}`;
+            resultBanner.textContent = isPlayerWinner ? '🏆 ¡Victoria!' : '💀 Derrota';
+        }
 
         this.querySelector('.battle-arena').appendChild(resultBanner);
-        this.playSound(isPlayerWinner ? '/sounds/victory.mp3' : '/sounds/defeat.mp3');
+        if (!isAbandoned) {
+            this.playSound(isPlayerWinner ? '/sounds/victory.mp3' : '/sounds/defeat.mp3');
+        }
 
         this.dispatchEvent(new CustomEvent('battle-ended', {
             detail: {

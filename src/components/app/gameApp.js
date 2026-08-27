@@ -33,7 +33,7 @@ class GameApp extends HTMLElement {
         this.currentAdmin = null;
 
         // Estado de la pantalla de resultados
-        this.lastResult = null;      // 'win' | 'loss'
+        this.lastResult = null;      // 'win' | 'loss' | 'abandoned'
         this.pointsAwarded = 0;
         this.isSavingResults = false;
         this.saveError = '';
@@ -133,16 +133,19 @@ class GameApp extends HTMLElement {
     // para no crear un archivo CSS nuevo solo para esta pantalla.
     renderResultsScreen() {
         const isWin = this.lastResult === 'win';
+        const isAbandoned = this.lastResult === 'abandoned';
+
+        const title = isAbandoned ? '🏳️ Batalla abandonada' : (isWin ? '🏆 ¡Victoria!' : '💀 Derrota');
 
         return `
             <section class="auth-card">
-                <h2 class="auth-title">${isWin ? '🏆 ¡Victoria!' : '💀 Derrota'}</h2>
+                <h2 class="auth-title">${title}</h2>
 
                 ${this.isSavingResults ? `
                     <p class="auth-message">Guardando resultados...</p>
                 ` : `
                     <p class="auth-message ${isWin ? 'auth-message--success' : ''}">
-                        +${this.pointsAwarded} puntos
+                        ${isAbandoned ? 'No se otorgaron puntos por abandonar la batalla.' : `+${this.pointsAwarded} puntos`}
                     </p>
                     <p class="auth-message">
                         Puntos totales: ${this.currentPlayer.points} ·
@@ -225,9 +228,12 @@ class GameApp extends HTMLElement {
 
     async handleBattleEnded(battleDetail) {
         const isWin = battleDetail.status === 'player-won';
+        const isAbandoned = battleDetail.status === 'abandoned';
 
-        this.lastResult = isWin ? 'win' : 'loss';
-        this.pointsAwarded = isWin ? POINTS_ON_WIN : POINTS_ON_LOSS;
+        // Abandonar la batalla NO otorga los puntos fijos de victoria/derrota
+        // ni cuenta como una de ellas: solo se registra el intento.
+        this.lastResult = isAbandoned ? 'abandoned' : (isWin ? 'win' : 'loss');
+        this.pointsAwarded = isAbandoned ? 0 : (isWin ? POINTS_ON_WIN : POINTS_ON_LOSS);
         this.isSavingResults = true;
         this.saveError = '';
         this.currentScreen = SCREEN.RESULTS;
@@ -235,8 +241,8 @@ class GameApp extends HTMLElement {
 
         const updatedStats = {
             points: this.currentPlayer.points + this.pointsAwarded,
-            wins: this.currentPlayer.wins + (isWin ? 1 : 0),
-            losses: this.currentPlayer.losses + (isWin ? 0 : 1),
+            wins: this.currentPlayer.wins + (!isAbandoned && isWin ? 1 : 0),
+            losses: this.currentPlayer.losses + (!isAbandoned && !isWin ? 1 : 0),
             gamesPlayed: this.currentPlayer.gamesPlayed + 1
         };
 
