@@ -15,7 +15,7 @@
 [![JSON Server](https://img.shields.io/badge/JSON%20Server-REST%20API-black?style=for-the-badge)](https://github.com/typicode/json-server)
 [![Railway](https://img.shields.io/badge/Deploy-Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white)](https://railway.app/)
 
-[![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow?style=flat-square)]()
+[![Status](https://img.shields.io/badge/status-en%20producción-brightgreen?style=flat-square)](https://bubbly-kindness-production-9147.up.railway.app/)
 [![Proyecto](https://img.shields.io/badge/tipo-proyecto%20académico-8A2BE2?style=flat-square)]()
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)]()
 
@@ -207,7 +207,7 @@ La API queda disponible en `http://localhost:3000` y el frontend en la URL que i
 |---|---|---|
 | `VITE_API_MODE` | Entorno activo: `development` o `production` | `development` |
 | `VITE_API_DEV_URL` | URL del `json-server` local | `http://localhost:3000` |
-| `VITE_API_PROD_URL` | URL de la API en producción (Railway) | `https://api-hogwarts.up.railway.app` |
+| `VITE_API_PROD_URL` | URL de la API en producción (Railway) | `https://card-battle-arena-production-ea87.up.railway.app` |
 
 > ⚠️ Estas variables se "hornean" en el bundle **en tiempo de build** (comportamiento estándar de Vite) — deben estar definidas *antes* de correr `npm run build`.
 
@@ -275,7 +275,9 @@ factor aleatorio de daño → ¿esquiva? → ¿crítico? → reducción por defe
 
 ## 👤 Autor
 
-Proyecto académico desarrollado con 🪄 por **Felipe**.
+Proyecto académico desarrollado con 🪄 por **Nicolás Fandiño** (MrFDV02) y **Fabián Uribe** (Sotwareeasy).
+
+🌐 **[Jugar ahora](https://bubbly-kindness-production-9147.up.railway.app/)**
 
 <div align="center">
 
