@@ -29,7 +29,10 @@ class AdminLogin extends HTMLElement {
                     <input id="admin-username" name="username" type="text" class="auth-input" autocomplete="off" ${this.state === STATE.LOADING ? 'disabled' : ''} />
 
                     <label for="admin-password" class="auth-label">Contraseña</label>
-                    <input id="admin-password" name="password" type="password" class="auth-input" autocomplete="off" ${this.state === STATE.LOADING ? 'disabled' : ''} />
+                    <div class="auth-input-wrapper">
+                        <input id="admin-password" name="password" type="password" class="auth-input" autocomplete="off" ${this.state === STATE.LOADING ? 'disabled' : ''} />
+                        <button type="button" class="auth-eye-btn" data-target="admin-password">👁</button>
+                    </div>
 
                     <button type="submit" class="auth-button" ${this.state === STATE.LOADING ? 'disabled' : ''}>
                         ${this.state === STATE.LOADING ? 'Verificando...' : 'Ingresar'}
@@ -43,6 +46,15 @@ class AdminLogin extends HTMLElement {
 
     configurarEventos() {
         this.querySelector('.auth-form').addEventListener('submit', (event) => this.handleSubmit(event));
+
+        this.querySelectorAll('.auth-eye-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const input = this.querySelector(`#${btn.dataset.target}`);
+                if (!input) return;
+                input.type = input.type === 'password' ? 'text' : 'password';
+                btn.textContent = input.type === 'password' ? '👁' : '🙈';
+            });
+        });
     }
 
     async handleSubmit(event) {

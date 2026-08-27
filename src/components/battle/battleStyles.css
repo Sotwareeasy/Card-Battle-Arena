@@ -545,3 +545,70 @@
     transform: translateY(0);
     box-shadow: 0 0 6px rgba(176, 58, 58, 0.4);
 }
+/* Botón terminar batalla — más discreto */
+.battle-surrender-btn {
+    display: block;
+    margin: 0.8rem auto 0;
+    padding: 0.4rem 1.2rem;
+    background: transparent;
+    border: 1px solid #8b0000;
+    color: #cc4444;
+    border-radius: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.battle-surrender-btn:hover {
+    background: #8b0000;
+    color: #fff;
+}
+
+/* Log de batalla en tiempo real */
+.battle-log {
+    margin: 1rem auto 0;
+    max-width: 600px;
+    background: rgba(10, 5, 30, 0.7);
+    border: 1px solid #b8860b44;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+}
+.battle-log-title {
+    font-family: 'Cinzel', serif;
+    color: #d4af37;
+    font-size: 0.8rem;
+    margin: 0 0 0.4rem 0;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.battle-log-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 140px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.battle-log-entry {
+    font-size: 0.78rem;
+    color: #c8b8e8;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.03);
+}
+.battle-log-entry--critical {
+    color: #ff6666;
+    font-weight: bold;
+}
+.battle-log-entry--dodged {
+    color: #00ff88;
+}
+.battle-log-entry--defeated {
+    color: #ff4444;
+    font-weight: bold;
+}
+.battle-log-entry--card-entered {
+    color: #88aaff;
+}

@@ -14,7 +14,15 @@ class ToastStack extends HTMLElement {
         super();
         this.innerHTML = '';
         this.className = 'toast-stack';
-        document.addEventListener('show-toast', (event) => this.addToast(event.detail));
+        this._toastHandler = (event) => this.addToast(event.detail);
+    }
+
+    connectedCallback() {
+        document.addEventListener('show-toast', this._toastHandler);
+    }
+
+    disconnectedCallback() {
+        document.removeEventListener('show-toast', this._toastHandler);
     }
 
     addToast({ message, type = 'success' }) {

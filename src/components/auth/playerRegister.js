@@ -40,24 +40,30 @@ class PlayerRegister extends HTMLElement {
                     />
 
                     <label for="password-input" class="auth-label">Contraseña</label>
-                    <input
-                        id="password-input"
-                        name="password"
-                        type="password"
-                        class="auth-input"
-                        autocomplete="new-password"
-                        ${this.state === STATE.LOADING ? 'disabled' : ''}
-                    />
+                    <div class="auth-input-wrapper">
+                        <input
+                            id="password-input"
+                            name="password"
+                            type="password"
+                            class="auth-input"
+                            autocomplete="new-password"
+                            ${this.state === STATE.LOADING ? 'disabled' : ''}
+                        />
+                        <button type="button" class="auth-eye-btn" data-target="password-input">👁</button>
+                    </div>
 
                     <label for="password-confirm-input" class="auth-label">Confirmar contraseña</label>
-                    <input
-                        id="password-confirm-input"
-                        name="passwordConfirm"
-                        type="password"
-                        class="auth-input"
-                        autocomplete="new-password"
-                        ${this.state === STATE.LOADING ? 'disabled' : ''}
-                    />
+                    <div class="auth-input-wrapper">
+                        <input
+                            id="password-confirm-input"
+                            name="passwordConfirm"
+                            type="password"
+                            class="auth-input"
+                            autocomplete="new-password"
+                            ${this.state === STATE.LOADING ? 'disabled' : ''}
+                        />
+                        <button type="button" class="auth-eye-btn" data-target="password-confirm-input">👁</button>
+                    </div>
 
                     <button type="submit" class="auth-button" ${this.state === STATE.LOADING ? 'disabled' : ''}>
                         ${this.state === STATE.LOADING ? 'Verificando...' : 'Registrarme'}
@@ -83,6 +89,15 @@ class PlayerRegister extends HTMLElement {
                 detail: { screen: 'login' },
                 bubbles: true
             }));
+        });
+
+        this.querySelectorAll('.auth-eye-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const input = this.querySelector(`#${btn.dataset.target}`);
+                if (!input) return;
+                input.type = input.type === 'password' ? 'text' : 'password';
+                btn.textContent = input.type === 'password' ? '👁' : '🙈';
+            });
         });
     }
 

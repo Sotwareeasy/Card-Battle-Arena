@@ -74,6 +74,10 @@ class BattleArena extends HTMLElement {
                 </div>
                 <battle-controls></battle-controls>
                 <button class="battle-surrender-btn">🏳️ Terminar Batalla</button>
+                <div class="battle-log">
+                    <h4 class="battle-log-title">📜 Registro de batalla</h4>
+                    <ul class="battle-log-list"></ul>
+                </div>
             </section>
         `;
     }
@@ -148,6 +152,8 @@ class BattleArena extends HTMLElement {
         const newEntries = this.state.log.slice(this.previousLogLength);
         this.previousLogLength = this.state.log.length;
 
+        newEntries.forEach((entry) => this.appendLogEntry(entry));
+
         const defeatedEntry = newEntries.find((entry) => entry.type === 'defeated');
 
         if (defeatedEntry) {
@@ -157,6 +163,46 @@ class BattleArena extends HTMLElement {
             this.syncUI();
             this.continueAfterAction();
         }
+    }
+
+    appendLogEntry(entry) {
+        const list = this.querySelector('.battle-log-list');
+        if (!list) return;
+
+        const side = entry.side === 'player' ? '🧙 Jugador' : '🤖 Máquina';
+        let text = '';
+
+        if (entry.type === 'attack') {
+            if (entry.dodged) {
+                text = `${side} usó ${entry.attackName} — ⚡ ¡ESQUIVADO! (0 daño)`;
+            } else if (entry.critical) {
+                text = `${side} usó ${entry.attackName} — 💥 ¡CRÍTICO! ${entry.damage} daño`;
+            } else {
+                text = `${side} usó ${entry.attackName} — ${entry.damage} daño`;
+            }
+        } else if (entry.type === 'special') {
+            if (entry.dodged) {
+                text = `${side} usó ${entry.specialName} — ⚡ ¡ESQUIVADO! (0 daño)`;
+            } else if (entry.critical) {
+                text = `${side} usó ${entry.specialName} — 💥 ¡CRÍTICO! ${entry.damage} daño`;
+            } else {
+                text = `${side} usó ${entry.specialName} — ${entry.damage} daño`;
+            }
+        } else if (entry.type === 'defense') {
+            text = `${side} usó ${entry.defenseName} — 🛡️ Defensa activa`;
+        } else if (entry.type === 'defeated') {
+            text = `💀 ${entry.cardName} fue derrotada`;
+        } else if (entry.type === 'card-entered') {
+            text = `✨ ${entry.cardName} entra al campo`;
+        } else {
+            return;
+        }
+
+        const li = document.createElement('li');
+        li.className = `battle-log-entry battle-log-entry--${entry.type}${entry.critical ? ' battle-log-entry--critical' : ''}${entry.dodged ? ' battle-log-entry--dodged' : ''}`;
+        li.textContent = text;
+        list.appendChild(li);
+        list.scrollTop = list.scrollHeight;
     }
 
     // Muestra brevemente la carta en 0 HP antes de reemplazarla por la siguiente del mazo.
