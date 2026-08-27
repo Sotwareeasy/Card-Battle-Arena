@@ -612,3 +612,29 @@
 .battle-log-entry--card-entered {
     color: #88aaff;
 }
+
+/* Barra de ventaja */
+.battle-advantage-bar {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    margin: 0.5rem auto;
+    height: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.battle-advantage-fill {
+    height: 100%;
+    width: 50%;
+    border-radius: 10px;
+    transition: width 0.5s ease, background 0.5s ease;
+}
+.battle-advantage-label {
+    display: block;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    letter-spacing: 1px;
+}
