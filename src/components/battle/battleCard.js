@@ -40,6 +40,26 @@ class BattleCard extends HTMLElement {
         `;
     }
 
+    // Muestra un mensaje flotante (¡GOLPE CRÍTICO! / ¡ATAQUE ESQUIVADO!) sobre la carta.
+    // type: 'critical' | 'dodge' -> usa las clases .battle-feedback--critical / --dodge ya definidas en battleStyles.css
+    showFeedback(text, type) {
+        const cardEl = this.querySelector('.battle-card');
+        if (!cardEl) return;
+
+        // Si ya había un mensaje flotante en curso, se retira antes de mostrar el nuevo
+        const previous = cardEl.querySelector('.battle-feedback');
+        if (previous) previous.remove();
+
+        const feedbackEl = document.createElement('span');
+        feedbackEl.className = `battle-feedback battle-feedback--${type}`;
+        feedbackEl.textContent = text;
+        cardEl.appendChild(feedbackEl);
+
+        feedbackEl.addEventListener('animationend', () => {
+            feedbackEl.remove();
+        }, { once: true });
+    }
+
     // Dispara una animación CSS reiniciándola si ya estaba activa.
     triggerAnimation(animationClass) {
         const cardEl = this.querySelector('.battle-card');

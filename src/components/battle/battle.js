@@ -151,7 +151,7 @@ class BattleArena extends HTMLElement {
         if (defeatedEntry) {
             this.showDefeatSequence(defeatedEntry, newEntries);
         } else {
-            this.playAnimationsFromLog(newEntries);
+            this.safePlayAnimationsFromLog(newEntries);
             this.syncUI();
             this.continueAfterAction();
         }
@@ -162,7 +162,7 @@ class BattleArena extends HTMLElement {
         const preDefeatEntries = newEntries.filter(
             (entry) => entry !== defeatedEntry && entry.type !== 'card-entered'
         );
-        this.playAnimationsFromLog(preDefeatEntries);
+        this.safePlayAnimationsFromLog(preDefeatEntries);
 
         const defeatedSideEl = this.querySelector(`.battle-side--${defeatedEntry.side}`);
         if (defeatedSideEl && defeatedSideEl.cardData) {
@@ -301,6 +301,16 @@ class BattleArena extends HTMLElement {
     }
 
     // --- Animaciones y sonido ---
+
+    // Envoltorio defensivo: un fallo al animar/mostrar feedback (ej. crítico o esquive)
+    // NUNCA debe congelar la batalla ni impedir que se agende el siguiente turno.
+    safePlayAnimationsFromLog(entries) {
+        try {
+            this.playAnimationsFromLog(entries);
+        } catch (error) {
+            console.warn('Error al reproducir animaciones/sonido, se continúa la batalla:', error);
+        }
+    }
 
     playAnimationsFromLog(entries) {
         entries.forEach((entry) => {
