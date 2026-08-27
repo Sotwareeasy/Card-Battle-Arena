@@ -1,4 +1,3 @@
-// battle.js
 // Orquestador de la pantalla de combate. Conecta battleEngine.js (lógica pura)
 // con battle-card y battle-controls (UI), maneja animaciones y sonido.
 //
@@ -65,7 +64,7 @@ class BattleArena extends HTMLElement {
                 <p class="battle-turn-indicator"></p>
                 <div class="battle-mode-bar">
                     <button type="button" class="battle-mode-btn" data-action="toggle-mode">
-                        ${this.mode === 'automatic' ? '烙 Modo: Automático' : ' Modo: Manual'}
+                        ${this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual'}
                     </button>
                 </div>
                 <div class="battle-field">
@@ -74,7 +73,7 @@ class BattleArena extends HTMLElement {
                     <battle-card class="battle-side battle-side--machine"></battle-card>
                 </div>
                 <battle-controls></battle-controls>
-                <button class="battle-surrender-btn">️ Terminar Batalla</button>
+                <button class="battle-surrender-btn">🏳️ Terminar Batalla</button>
             </section>
         `;
     }
@@ -120,7 +119,7 @@ class BattleArena extends HTMLElement {
 
         const modeBtn = this.querySelector('.battle-mode-btn');
         if (modeBtn) {
-            modeBtn.textContent = this.mode === 'automatic' ? '烙 Modo: Automático' : ' Modo: Manual';
+            modeBtn.textContent = this.mode === 'automatic' ? '🤖 Modo: Automático' : '🎮 Modo: Manual';
         }
 
         // Al cambiar a manual, cancelamos cualquier acción automática en espera y liberamos la bandera
@@ -213,7 +212,7 @@ class BattleArena extends HTMLElement {
                 engine.getActiveCard(this.state, 'machine'),
                 { attackIds: [], canDefend: false, canUseSpecial: false },
                 false,
-                '烙 Turno de la máquina...'
+                '🤖 Turno de la máquina...'
             );
         }
         this.turnInProgress = true;
@@ -227,26 +226,22 @@ class BattleArena extends HTMLElement {
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS) return;
 
         try {
+            const available = engine.getAvailableActions(this.state, 'machine');
             const decision = decideAutoAction(this.state, 'machine');
-            
-            if (decision && decision.type === 'attack') {
+
+            if (decision && decision.type === 'attack' && available.attackIds.includes(decision.attackId)) {
                 engine.performAttack(this.state, 'machine', decision.attackId);
-            } else if (decision && decision.type === 'defense') {
+            } else if (decision && decision.type === 'defense' && available.canDefend) {
                 engine.performDefense(this.state, 'machine');
-            } else if (decision && decision.type === 'special') {
+            } else if (decision && decision.type === 'special' && available.canUseSpecial) {
                 engine.performSpecial(this.state, 'machine');
             } else {
-                // Fallback: Si la IA falla o no decide por estar el rival defendiendo, forzar ataque del primer slot
-                const activeCard = engine.getActiveCard(this.state, 'machine');
-                const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
-                engine.performAttack(this.state, 'machine', defaultAttackId);
+                this.executeFallbackTurn('machine', available);
             }
         } catch (error) {
             console.warn('Error durante el turno de la máquina, aplicando fallback:', error);
-            // Fallback de seguridad para no congelar la pantalla
-            const activeCard = engine.getActiveCard(this.state, 'machine');
-            const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
-            engine.performAttack(this.state, 'machine', defaultAttackId);
+            const available = engine.getAvailableActions(this.state, 'machine');
+            this.executeFallbackTurn('machine', available);
         }
 
         this.handleStateChange();
@@ -263,7 +258,7 @@ class BattleArena extends HTMLElement {
                 engine.getActiveCard(this.state, 'player'),
                 { attackIds: [], canDefend: false, canUseSpecial: false },
                 false,
-                '烙 Acción automática en curso...'
+                '🤖 Acción automática en curso...'
             );
         }
         this.turnInProgress = true;
@@ -277,27 +272,41 @@ class BattleArena extends HTMLElement {
         if (this.state.status !== engine.BATTLE_STATUS.IN_PROGRESS || this.state.turn !== 'player') return;
 
         try {
+            const available = engine.getAvailableActions(this.state, 'player');
             const decision = decideAutoAction(this.state, 'player');
-            
-            if (decision && decision.type === 'attack') {
+
+            if (decision && decision.type === 'attack' && available.attackIds.includes(decision.attackId)) {
                 engine.performAttack(this.state, 'player', decision.attackId);
-            } else if (decision && decision.type === 'defense') {
+            } else if (decision && decision.type === 'defense' && available.canDefend) {
                 engine.performDefense(this.state, 'player');
-            } else if (decision && decision.type === 'special') {
+            } else if (decision && decision.type === 'special' && available.canUseSpecial) {
                 engine.performSpecial(this.state, 'player');
             } else {
-                const activeCard = engine.getActiveCard(this.state, 'player');
-                const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
-                engine.performAttack(this.state, 'player', defaultAttackId);
+                this.executeFallbackTurn('player', available);
             }
         } catch (error) {
             console.warn('Error durante el turno automático del jugador:', error);
-            const activeCard = engine.getActiveCard(this.state, 'player');
-            const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
-            engine.performAttack(this.state, 'player', defaultAttackId);
+            const available = engine.getAvailableActions(this.state, 'player');
+            this.executeFallbackTurn('player', available);
         }
 
         this.handleStateChange();
+    }
+
+    // --- Fallback de seguridad contra Cooldowns o IA bloqueada ---
+
+    executeFallbackTurn(side, available) {
+        if (available && available.attackIds && available.attackIds.length > 0) {
+            engine.performAttack(this.state, side, available.attackIds[0]);
+        } else if (available && available.canDefend) {
+            engine.performDefense(this.state, side);
+        } else if (available && available.canUseSpecial) {
+            engine.performSpecial(this.state, side);
+        } else {
+            const activeCard = engine.getActiveCard(this.state, side);
+            const defaultAttackId = activeCard?.attacks?.[0]?.id || 1;
+            engine.performAttack(this.state, side, defaultAttackId);
+        }
     }
 
     // --- Animaciones y sonido ---
@@ -354,7 +363,7 @@ class BattleArena extends HTMLElement {
                     activeCard,
                     { attackIds: [], canDefend: false, canUseSpecial: false },
                     false,
-                    '烙 Acción automática en curso...'
+                    '🤖 Acción automática en curso...'
                 );
             } else {
                 const availableActions = engine.getAvailableActions(this.state, 'player');
@@ -366,7 +375,7 @@ class BattleArena extends HTMLElement {
                 activeCard,
                 { attackIds: [], canDefend: false, canUseSpecial: false },
                 false,
-                '烙 Turno de la máquina...'
+                '🤖 Turno de la máquina...'
             );
         }
     }
@@ -378,7 +387,7 @@ class BattleArena extends HTMLElement {
 
         const resultBanner = document.createElement('div');
         resultBanner.className = `battle-result ${isPlayerWinner ? 'battle-result--win' : 'battle-result--loss'}`;
-        resultBanner.textContent = isPlayerWinner ? ' ¡Victoria!' : ' Derrota';
+        resultBanner.textContent = isPlayerWinner ? '🏆 ¡Victoria!' : '💀 Derrota';
 
         this.querySelector('.battle-arena').appendChild(resultBanner);
         this.playSound(isPlayerWinner ? '/sounds/victory.mp3' : '/sounds/defeat.mp3');
