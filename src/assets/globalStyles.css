@@ -36,9 +36,9 @@ body::after {
 }
 
 @keyframes castleFloat {
-    0% { transform: translateX(-50%) translateY(0px); opacity: 0.06; }
-    50% { transform: translateX(-50%) translateY(-8px); opacity: 0.10; }
-    100% { transform: translateX(-50%) translateY(0px); opacity: 0.06; }
+    0% { transform: translateY(0px); opacity: 0.06; }
+    50% { transform: translateY(-8px); opacity: 0.10; }
+    100% { transform: translateY(0px); opacity: 0.06; }
 }
 
 /* Partículas mágicas de fondo */
