@@ -52,7 +52,7 @@ class AdminLogin extends HTMLElement {
                 const input = this.querySelector(`#${btn.dataset.target}`);
                 if (!input) return;
                 input.type = input.type === 'password' ? 'text' : 'password';
-                btn.textContent = input.type === 'password' ? '👁' : '🙈';
+                btn.textContent = input.type === 'password' ? '👁' : '🔒';
             });
         });
     }
