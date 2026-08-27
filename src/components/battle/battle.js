@@ -198,9 +198,11 @@ class BattleArena extends HTMLElement {
             return;
         }
 
+        const now = new Date();
+        const time = now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         const li = document.createElement('li');
         li.className = `battle-log-entry battle-log-entry--${entry.type}${entry.critical ? ' battle-log-entry--critical' : ''}${entry.dodged ? ' battle-log-entry--dodged' : ''}`;
-        li.textContent = text;
+        li.textContent = `[${time}] ${text}`;
         list.appendChild(li);
         list.scrollTop = list.scrollHeight;
     }
