@@ -209,7 +209,6 @@ class GameApp extends HTMLElement {
                 this.render();
             }
             if (event.target.dataset.action === 'go-home') {
-                this.currentAdmin = null;
                 this.currentScreen = this.currentPlayer ? SCREEN.DECK_SELECTION : SCREEN.LOGIN;
                 this.render();
             }
